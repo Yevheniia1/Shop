@@ -1,3 +1,24 @@
 .nav-wrapper {
     padding: 0 2rem;
 }
+
+.row--products {
+    display: flex;
+    align-items: stretch;
+}
+
+.card .card-title--products {
+    margin: 0;
+    padding: 24px;
+    color: #000000;
+    font-weight: 500;
+    position: static;
+}
+
+.card--products {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}

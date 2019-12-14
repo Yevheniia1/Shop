@@ -1,1 +1,25 @@
 <h1>Товары</h1>
+
+{{#if productsList.length}}
+<div class="row row--products">
+    {{#each productsList}}
+    <div class="col s6">
+        <div class="card card--products">
+            <div class="card-image">
+                <img src="{{img}}" alt="{{title}}">
+            </div>
+            <h3 class="card-title card-title--products">{{title}}</h3>
+            <div class="card-content card-price">
+                <p>{{price}}</p>
+            </div>
+            <div class="card-action card-action--products">
+                <a href='/products/{{id}}'>Больше</a>
+            </div>
+        </div>
+    </div>
+    
+{{/each}}
+</div>
+{{else}}
+    <strong>Товаров пока нет</strong>
+{{/if}}
