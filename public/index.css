@@ -9,10 +9,15 @@
 
 .card .card-title--products {
     margin: 0;
-    padding: 24px;
+    padding: 14px 24px;
     color: #000000;
     font-weight: 500;
     position: static;
+}
+
+.card .card-price {
+    font-size: 2rem;
+    padding: 14px 24px;
 }
 
 .card--products {
