@@ -20,6 +20,23 @@ class Product {
         }
     }
 
+    static async update(productAfterEdit) {
+        const products = await Product.getAll();
+        const index = products.findIndex( (p) => p.id === productAfterEdit.id);
+        products[index] = productAfterEdit;
+
+        return new Promise( (resolve, reject) => {
+            fs.writeFile(
+                path.join(__dirname, '..', 'data', 'products.json'),
+                JSON.stringify(products),
+                (err) => {
+                    if(err) reject(err)
+                    else resolve()
+                }
+            )
+        })
+    }
+
     async save() {
         const product = await Product.getAll();
         product.push(this.createObj())
@@ -45,7 +62,7 @@ class Product {
                     if(err) { 
                         reject(err)
                     } else {
-                        return resolve(JSON.parse(content))
+                        resolve(JSON.parse(content))
                     }
                 }
             )

@@ -12,6 +12,25 @@ router.get('/', async (req, res) => {
     })
 })
 
+router.get('/:id/edit', async (req, res) => {
+    if(!req.query.allow) { 
+        return res.redirect('/')
+    }
+
+    const product = await Products.getById(req.params.id);
+
+    res.render('product-edit', {
+        title: `Редактировать ${product.title}`,
+        product
+    })
+})
+
+router.post('/edit', async (req, res) => {
+    await Products.update(req.body);
+
+    res.redirect('/products')
+})
+
 router.get('/:id', async (req, res) => {
     const product = await Products.getById(req.params.id);
     res.render('product', {
