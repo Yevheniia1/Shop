@@ -4,7 +4,7 @@ const Products = require('../models/products')
 const router = Router();
 
 router.get('/', async (req, res) => {
-    const productsList = await Products.getAll();
+    const productsList = await Products.find();
     res.render('products', {
         title: 'Товары',
         isProducts: true,
@@ -17,7 +17,7 @@ router.get('/:id/edit', async (req, res) => {
         return res.redirect('/')
     }
 
-    const product = await Products.getById(req.params.id);
+    const product = await Products.findById(req.params.id);
 
     res.render('product-edit', {
         title: `Редактировать ${product.title}`,
@@ -26,13 +26,15 @@ router.get('/:id/edit', async (req, res) => {
 })
 
 router.post('/edit', async (req, res) => {
-    await Products.update(req.body);
+    const {id} = req.body;
+    delete req.body.id;
+    await Products.findByIdAndUpdate(id, req.body);
 
     res.redirect('/products')
 })
 
 router.get('/:id', async (req, res) => {
-    const product = await Products.getById(req.params.id);
+    const product = await Products.findById(req.params.id);
     res.render('product', {
         layout: 'empty',
         section: 'products',
