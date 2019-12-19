@@ -8,7 +8,8 @@ const express = require('express'),
 const homeRouter = require('./routes/home'),
       addRouter = require('./routes/add'),
       productsRouter = require('./routes/products'),
-      cartRouter = require('./routes/cart')
+      cartRouter = require('./routes/cart'),
+      User = require('./models/user');
 
 //Создание приложения
 const app = express();
@@ -28,10 +29,22 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 //Загрузка маршрутизаторов в приложение
+app.use( async(req, res, next) => {
+    try{
+        const user = await User.findById('5dfb920a40bdbd4698a930ac')
+        req.user = user;
+        next()
+    }catch(e) {
+        console.log(e)
+    }
+})
 app.use('/', homeRouter);
-app.use('/add', addRouter);
 app.use('/products', productsRouter);
 app.use('/cart', cartRouter);
+app.use('/add', addRouter);
+
+
+
 
 //Подключение БД
 async function start() {
@@ -45,11 +58,21 @@ async function start() {
             useFindAndModify: false
         });
 
+        const candidate = await User.findOne();
+        if(!candidate) {
+            const user = new User({
+                name: 'Yevheniia',
+                email: 'evgenia.potiychuk@gmail.com',
+                cart: {items: []}
+            });
+            await user.save()
+        } 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
         })
+        
     } catch(e) {
-        throw(e);
+        console.log(e);
     }
 }
 start();

@@ -89,3 +89,7 @@
 .breadcrumb:before {
     content: '\203A';
 }
+
+.product__remove {
+    margin-top: 1rem;
+}

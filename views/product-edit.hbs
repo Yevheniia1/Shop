@@ -1,4 +1,4 @@
-<h1>Редактировать {{product.title}}</h1>
+<h1>Редактировать: {{product.title}}</h1>
 
 <form action="/products/edit" method="POST">
     <input type="hidden" name="id" value="{{product.id}}"></input>
@@ -23,4 +23,9 @@
 
     <button class="btn btn-primary" type="submit">Редактировать</button>
 
+</form>
+
+<form action="/products/remove" method="POST" class="product__remove">
+    <input type="hidden" name="id" value="{{product.id}}"></input>
+    <button type="submit" class="btn red">Удалить товар</button>
 </form>

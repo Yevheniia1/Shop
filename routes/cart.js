@@ -1,29 +1,52 @@
 const {Router} = require('express');
 const router = Router();
 
-const Cart = require('../models/cart');
 const Product = require('../models/products');
 
+function mapCartItems(cart) {
+    // console.log(cart.items)
+   return cart.items.map( p => ({
+       ...p.productId._doc, 
+       id: p.productId.id,
+       quantity: p.quantity
+   }))
+}
+
+function computePrice(products) {
+    return products.reduce((total, product) => {
+        return total += product.price * product.quantity
+    }, 0)
+}
+
 router.get('/', async (req, res) => {
-    const cart = await Cart.fetch();
+    const user = await req.user
+    .populate('cart.items.productId')
+    .execPopulate();
+    const products = mapCartItems(user.cart)
     res.render('cart', {
         title: 'Корзина',
         isCart: true,
-        products: cart.products,
-        price: cart.price,
-        cart
+        products: products,
+        price: computePrice(products)
     })
 })
 
 router.delete('/remove/:id', async (req, res) => {
-    const cart = await Cart.remove(req.params.id);
+    await req.user.removeFromCart(req.params.id)
+    const user = await req.user.populate('cart.items.productId').execPopulate();
+
+    const products = mapCartItems(user.cart)
+    const cart = {
+        products,
+        price: computePrice(products)
+    }
     res.json(cart)
 })
 
 router.post('/add', async (req, res) => {
-    const product = await Product.getById(req.body.id);
-    product.quantity = req.body.quantity;
-    await Cart.add(product)
+    const product = await Product.findById(req.body.id);
+    const quantity = req.body.quantity
+    await req.user.addToCart(product, quantity)
     res.redirect('/cart')
 })
 
