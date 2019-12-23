@@ -1,10 +1,11 @@
 const {Router} = require('express');
+const auth = require('../middleware/auth');
 const router = Router();
 
 const Product = require('../models/products');
 
 function mapCartItems(cart) {
-    // console.log(cart.items)
+    
    return cart.items.map( p => ({
        ...p.productId._doc, 
        id: p.productId.id,
@@ -13,12 +14,13 @@ function mapCartItems(cart) {
 }
 
 function computePrice(products) {
+    // console.log('cart', user.cart.items)
     return products.reduce((total, product) => {
         return total += product.price * product.quantity
     }, 0)
 }
 
-router.get('/', async (req, res) => {
+router.get('/', auth, async (req, res) => {
     const user = await req.user
     .populate('cart.items.productId')
     .execPopulate();
@@ -31,7 +33,7 @@ router.get('/', async (req, res) => {
     })
 })
 
-router.delete('/remove/:id', async (req, res) => {
+router.delete('/remove/:id', auth, async (req, res) => {
     await req.user.removeFromCart(req.params.id)
     const user = await req.user.populate('cart.items.productId').execPopulate();
 
@@ -43,7 +45,7 @@ router.delete('/remove/:id', async (req, res) => {
     res.json(cart)
 })
 
-router.post('/add', async (req, res) => {
+router.post('/add', auth, async (req, res) => {
     const product = await Product.findById(req.body.id);
     const quantity = req.body.quantity
     await req.user.addToCart(product, quantity)

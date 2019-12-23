@@ -1,5 +1,25 @@
-const PRICE_LIST = document.querySelectorAll('.product__price');
 
+//Инициализация табов (на странице авторизации)
+
+M.Tabs.init(document.querySelectorAll('.tabs')); 
+
+//Настройка отображения даты
+const toDate = date => {
+    return new Intl.DateTimeFormat('ua-UA', {
+        day: '2-digit',
+        month: 'long',
+        yaer: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+    }).format(new Date(date))
+}
+
+document.querySelectorAll('.orders__date').forEach( node => {
+    node.textContent = toDate(node.textContent)
+})
+
+//Настройка отображения валюты
 function toCurrency(num) {
     return new Intl.NumberFormat('ua-UA', {
         currency: 'uah',
@@ -7,10 +27,12 @@ function toCurrency(num) {
     }).format(num)
 }
 
-PRICE_LIST.forEach( (productPrice) => {
+document.querySelectorAll('.product__price').forEach( productPrice => {
     const PRICE = parseFloat(productPrice.textContent);
     productPrice.textContent = toCurrency(PRICE)
 })
+
+//Динамическая перерисовка корзины для удаления товаров
 
 const $cart = document.getElementById('cart');
 
@@ -47,3 +69,4 @@ $cart.addEventListener('click', (e) => {
 
     }
 })
+

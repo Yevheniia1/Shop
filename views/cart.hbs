@@ -27,6 +27,9 @@
         </tbody>
     </table>
     <p>Сумма к оплате: <strong class="product__price">{{price}}</strong></p>
+    <form action="/orders" method="POST">
+        <button type="submit" class="btn">Заказать</button>
+    </form>
     {{else}}
         <p>Товаров в корзине пока нет</p>
 
