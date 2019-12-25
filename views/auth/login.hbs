@@ -11,13 +11,13 @@
             <form action="/auth/login" method="POST">
 
                 <div class="input-field">
-                    <input id="email" name="email" type="email" class="validate" required>
+                    <input id="email" name="email" type="email" class="validate" required autocomplete="email">
                     <label for="email">Email</label>
                     <span class="helper-text" data-error="Введите email"></span>
                 </div>
 
                 <div class="input-field">
-                    <input id="password" name="password" type="text" class="validate" required min="1">
+                    <input id="password" name="password" type="text" class="validate" required min="1" >
                     <label for="password">Пароль</label>
                     <span class="helper-text" data-error="Введите пароль"></span>
                 </div>
@@ -31,14 +31,20 @@
              <form action="/auth/register" method="POST">
 
                 <div class="input-field">
-                    <input id="reg-email" name="reg-email" type="email" class="validate" required>
-                    <label for="reg-email">Email</label>
+                    <input id="regemail" name="regemail" type="email" class="validate" required>
+                    <label for="regemail">Email</label>
                     <span class="helper-text" data-error="Введите email"></span>
                 </div>
 
                 <div class="input-field">
-                    <input id="reg-password" name="reg-password" type="text" class="validate" required min="1">
-                    <label for="reg-password">Пароль</label>
+                    <input id="name" name="name" type="text" class="validate" required>
+                    <label for="name">Ваше имя</label>
+                    <span class="helper-text" data-error="Введите имя"></span>
+                </div>
+
+                <div class="input-field">
+                    <input id="regpassword" name="regpassword" type="text" class="validate" required min="1">
+                    <label for="regpassword">Пароль</label>
                     <span class="helper-text" data-error="Введите пароль"></span>
                 </div>
 
