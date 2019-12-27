@@ -6,7 +6,9 @@ const express = require('express'),
       path = require('path'),
       mongoose = require('mongoose'),
       session = require('express-session'),
-      MongoStore = require('connect-mongodb-session')(session);
+      MongoStore = require('connect-mongodb-session')(session),
+      csrf = require('csurf'),
+      flash = require('connect-flash')
 
 //Маршрутизаторы
 const homeRouter = require('./routes/home'),
@@ -15,8 +17,7 @@ const homeRouter = require('./routes/home'),
       cartRouter = require('./routes/cart'),
       User = require('./models/user'),
       ordersRouter = require('./routes/orders'),
-      authRouter = require('./routes/auth'),
-      csrf = require('csurf');
+      authRouter = require('./routes/auth');
 
 //Middleware
 const varMiddleware = require('./middleware/variables'),
@@ -41,6 +42,7 @@ app.use(session({
     store
 }))
 app.use(csrf())
+app.use(flash())
 app.use(varMiddleware)
 app.use(userMiddlewear)
 

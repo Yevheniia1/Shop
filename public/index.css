@@ -1,3 +1,16 @@
+@keyframes opacity{
+    from { opacity: 0;}
+    to { opacity: 1;}
+}
+
+.alert {
+    padding: .5em;
+    color: rgb(255, 0, 0);
+    border-bottom: 1px solid rgb(255, 0, 0);
+    background-color: rgba(255, 0, 0, .1);
+    animation: opacity .5s ease;
+}
+
 .card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
     margin-right: 0;
     text-transform: none;

@@ -6,7 +6,9 @@ const {Router} = require('express'),
 router.get('/login', async (req, res) => {
     res.render('auth/login', {
         title: 'Авторизация',
-        isLogin: true
+        isLogin: true,
+        loginError: req.flash('loginError'),
+        registerError: req.flash('registerError'),
     })
 })
 
@@ -25,6 +27,7 @@ router.post('/login', async(req, res) => {
                 res.redirect('/')
             })
         } else {
+            req.flash('loginError', 'Неправильный логин или пароль')
             res.redirect('/auth/login#login')
         }
     } catch(e) {
@@ -38,6 +41,7 @@ router.post('/register', async(req, res) => {
         const candidate = await User.findOne({ regemail });
     
         if(candidate) {
+            req.flash('registerError', 'Email уже используется' )
             res.redirect('/auth/login#login')
         } else {
             const hashPassword = bcrypt.hash(regpassword, 10)
