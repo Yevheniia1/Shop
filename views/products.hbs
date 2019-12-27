@@ -18,6 +18,7 @@
                 <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
                 <form action="/cart/add" method="POST" class="card-action__form">
                     <input type="hidden" name="id" value="{{id}}">
+                    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
                     <button type="submit" class="btn btn-primary card-action__form__btn">Купить</button>
                     <input type="number" min="1" value="1" name="quantity" class="card-action__form__quantity">
                 </form>

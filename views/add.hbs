@@ -19,7 +19,8 @@
         <label for="img">URL картинки</label>
         <span class="helper-text" data-error="Введите url картинки"></span>
     </div>
-
+    
+    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
     <button class="btn btn-primary" type="submit">Отправить</button>
 
 </form>

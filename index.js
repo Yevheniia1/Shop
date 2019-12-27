@@ -15,7 +15,8 @@ const homeRouter = require('./routes/home'),
       cartRouter = require('./routes/cart'),
       User = require('./models/user'),
       ordersRouter = require('./routes/orders'),
-      authRouter = require('./routes/auth')
+      authRouter = require('./routes/auth'),
+      csrf = require('csurf');
 
 //Middleware
 const varMiddleware = require('./middleware/variables'),
@@ -39,6 +40,7 @@ app.use(session({
     saveUninitialized: false,
     store
 }))
+app.use(csrf())
 app.use(varMiddleware)
 app.use(userMiddlewear)
 

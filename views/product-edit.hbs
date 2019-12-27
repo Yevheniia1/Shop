@@ -21,11 +21,13 @@
         <span class="helper-text" data-error="Введите url картинки"></span>
     </div>
 
+    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
     <button class="btn btn-primary" type="submit">Редактировать</button>
 
 </form>
 
 <form action="/products/remove" method="POST" class="product__remove">
     <input type="hidden" name="id" value="{{product.id}}"></input>
+    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
     <button type="submit" class="btn red">Удалить товар</button>
 </form>
