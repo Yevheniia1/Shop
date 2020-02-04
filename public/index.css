@@ -1,112 +1,118 @@
-@keyframes opacity{
-    from { opacity: 0;}
-    to { opacity: 1;}
-}
-
-.alert {
-    padding: .5em;
-    color: rgb(255, 0, 0);
-    border-bottom: 1px solid rgb(255, 0, 0);
-    background-color: rgba(255, 0, 0, .1);
-    animation: opacity .5s ease;
-}
-
-.card .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
-    margin-right: 0;
-    text-transform: none;
-    font-size: .8rem;
-}
-
 .nav-wrapper {
-    padding: 0 2rem;
-}
+  padding: 0 2rem; }
 
-.row--products {
+@media only screen and (max-width: 992px) {
+  .row--products {
+    flex-wrap: wrap; }
+  nav {
+    height: auto; }
+  nav .nav-wrapper {
+    height: auto;
     display: flex;
-    align-items: stretch;
-}
+    flex-direction: column;
+    padding: 0;
+    margin-bottom: 30px; }
+  nav .brand-logo {
+    position: relative;
+    text-align: center; }
+  #nav-mobile {
+    display: flex;
+    background-color: #777777; }
+  #nav-mobile li a {
+    font-size: 0.7rem;
+    padding: 0 0.7rem;
+    line-height: 3; }
+  .menu-item-right {
+    margin-left: auto; } }
 
 .card .card-title--products {
-    margin: 0;
-    padding: 14px 24px;
-    color: #000000;
-    font-weight: 500;
-    position: static;
-}
+  margin: 0;
+  padding: 14px 24px;
+  color: #000000;
+  font-weight: 500;
+  position: static; }
 
 .card .card-price {
-    font-size: 2rem;
-    padding: 14px 24px;
-}
+  font-size: 2rem;
+  padding: 14px 24px; }
 
 .card--products {
-    height: 100%;
-    margin: 0 1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+  height: 100%;
+  margin: 0 1rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
 
 .card .card-action--products {
-    padding-top: 5px;
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: flex-start;
-}
+  padding-top: 5px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: flex-start; }
 
-.card .card-action__form {
-    width: 100%;
-    margin-top: 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-}
+.card-action__form {
+  width: 100%;
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; }
 
 .card-action__form__quantity {
-    width: 20% !important;
-    height: 2.5rem !important;
-    text-align: center;
-}
+  width: 20% !important;
+  height: 2.5rem !important;
+  text-align: center; }
 
-.card .card-action__form__btn {
-    width: 70% !important;
-}
+.card-action__form__btn {
+  width: 70% !important; }
 
-.product{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+.card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+  margin-right: 0;
+  text-transform: none;
+  font-size: .8rem; }
 
-.product__title {
+.row--products {
+  display: flex;
+  align-items: stretch; }
+  @media screen and (max-width: 992px) {
+    .row--products {
+      flex-wrap: wrap; } }
+  .row--products div {
+    margin-bottom: 2rem; }
+
+.product {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .product__title {
     font-size: 1.5rem;
     margin: 2rem 0;
-    font-weight: 700;
-}
-
-.product__img {
+    font-weight: 700; }
+  .product__img {
     max-width: 300px;
-    height: auto;
-}
+    height: auto; }
+  .product__price {
+    font-size: 2rem; }
+  .product__price.big {
+    font-size: 2.5rem; }
+  .product__remove {
+    margin-top: 1rem; }
 
-.product__price {
-    font-size: 2rem;
-}
+@keyframes opacity {
+  from {
+    opacity: 0; }
+  to {
+    opacity: 1; } }
 
-.product__price.big {
-    font-size: 2.5rem;
-}
+.alert {
+  padding: .5em;
+  color: red;
+  border-bottom: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.1);
+  animation: opacity .5s ease; }
 
 .breadcrumb:before {
-    content: '\203A';
-}
-
-.product__remove {
-    margin-top: 1rem;
-}
+  content: '\203A'; }
 
 .auth {
-    margin-top: 1rem;
-}
+  margin-top: 1rem; }

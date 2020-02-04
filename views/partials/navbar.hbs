@@ -1,7 +1,7 @@
 <nav>
     <div class="nav-wrapper">
         <a href="/" class="brand-logo">Shop</a>
-        <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <ul id="nav-mobile" class="right">
 
         {{#if isHome}}
             <li class="active"><a href="/">Главная</a></li>
@@ -33,12 +33,12 @@
             {{else}}
                 <li><a href="/orders">Заказы</a></li>
             {{/if}}
-             <li><a href="/auth/logout">Выйти</a></li>
+             <li  class="menu-item-right"><a href="/auth/logout">Выйти</a></li>
         {{else}}
             {{#if isLogin}}
-                <li class="active"><a href="/auth/login#login">Войти</a></li class="active">
+                <li class="active menu-item-right"><a href="/auth/login#login">Войти</a></li class="active">
             {{else}}
-                <li><a href="/auth/login#login">Войти</a></li>
+                <li class="menu-item-right"><a href="/auth/login#login">Войти</a></li>
         {{/if}}
         {{/if}}
         </ul>

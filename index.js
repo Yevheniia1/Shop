@@ -78,16 +78,6 @@ async function start() {
             useUnifiedTopology: true,
             useFindAndModify: false
         });
-
-        const candidate = await User.findOne();
-        if(!candidate) {
-            const user = new User({
-                name: 'Yevheniia',
-                email: 'evgenia.potiychuk@gmail.com',
-                cart: {items: []}
-            });
-            await user.save()
-        } 
         app.listen(PORT, () => {
             console.log(`Server is running on port ${PORT}`)
         })

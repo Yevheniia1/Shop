@@ -1,0 +1,41 @@
+.nav-wrapper {
+    padding: 0 2rem;
+}
+
+@media only screen and (max-width: 992px) {
+    .row--products {
+        flex-wrap: wrap;
+    }
+
+    nav {
+        height: auto;
+    }
+
+    nav .nav-wrapper {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        margin-bottom: 30px;
+    }
+
+    nav .brand-logo {
+        position: relative;
+        text-align: center;
+    }
+
+    #nav-mobile {
+        display: flex;
+        background-color: #777777;
+    }
+
+    #nav-mobile li a {
+        font-size: 0.7rem;
+        padding: 0 0.7rem;
+        line-height: 3;
+    }
+
+    .menu-item-right {
+        margin-left: auto;
+    }
+}
