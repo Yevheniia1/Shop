@@ -7,7 +7,9 @@ const express = require('express'),
       MongoStore = require('connect-mongodb-session')(session),
       csrf = require('csurf'),
       flash = require('connect-flash'),
-      keys = require('./keys');
+      keys = require('./keys'),
+      client = require('@sendgrid/client');
+
 
 //Маршрутизаторы
 const homeRouter = require('./routes/home'),
@@ -65,6 +67,19 @@ app.use('/cart', cartRouter)
 app.use('/add', addRouter)
 app.use('/orders', ordersRouter)
 app.use('/auth', authRouter)
+
+//SENDGRID
+
+client.setApiKey(keys.SENDGRID_API_KEY); 
+const request = {
+  method: 'GET',
+  url: '/v3/api_keys'
+};
+client.request(request)
+.then(([response, body]) => {
+  console.log(response.statusCode);
+  console.log(body);
+})
 
 //Подключение БД
 async function start() {
