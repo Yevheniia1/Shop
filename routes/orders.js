@@ -20,7 +20,6 @@ router.get('/', auth, async(req, res) => {
     } catch(e) {
         console.log(e)
     }
-   
 })
 
 router.post('/', auth, async (req, res) => {
@@ -29,14 +28,11 @@ router.post('/', auth, async (req, res) => {
             .populate('cart.items.productId')
             .execPopulate();
 
-            
-
         const products = user.cart.items.map( p => ({
             product: {...p.productId._doc}, 
             id: p.productId.id,
             quantity: p.quantity,
         }))
-        // console.log('order', user.cart.items)
 
         const order = new Orders({
             user: {

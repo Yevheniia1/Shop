@@ -60,9 +60,8 @@
                     <label for="confirm">Пароль повторно</label>
                     <span class="helper-text" data-error="Введите пароль"></span>
                 </div>
-
+                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
                 <button class="btn btn-primary" type="submit">зарегистрироваться</button>
-
             </form>
         </div>
     </div>

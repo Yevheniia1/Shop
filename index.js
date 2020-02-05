@@ -1,5 +1,3 @@
-const MONGODB_URI = 'mongodb+srv://yevheniia:ujE7KL9yMUxrGaV@cluster0-qvl7t.mongodb.net/shop';
-
 //Модули
 const express = require('express'),
       exphbs = require('express-handlebars'),
@@ -8,7 +6,8 @@ const express = require('express'),
       session = require('express-session'),
       MongoStore = require('connect-mongodb-session')(session),
       csrf = require('csurf'),
-      flash = require('connect-flash')
+      flash = require('connect-flash'),
+      keys = require('./keys');
 
 //Маршрутизаторы
 const homeRouter = require('./routes/home'),
@@ -31,12 +30,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const store = new MongoStore({
     collection: 'session',
-    uri: MONGODB_URI
+    uri: keys.MONGODB_URI
 })
 
 app.use(express.urlencoded({extended:true}))
 app.use(session({
-    secret:'some',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store
@@ -71,7 +70,7 @@ app.use('/auth', authRouter)
 async function start() {
     try{
         const PORT = process.env.PORT || 3000,
-              url = MONGODB_URI;
+              url = keys.MONGODB_URI;
 
         await mongoose.connect(url, {
             useNewUrlParser: true,

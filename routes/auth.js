@@ -15,9 +15,10 @@ router.get('/login', async (req, res) => {
 router.post('/login', async(req, res) => {
     try {
         const {email, password} = req.body;
-        const user = await User.findOne({ email });
+        const user = await User.findOne({ email }),
+              areSame = await bcrypt.compare(password, user.password);
 
-        if(user && bcrypt.compare(password, user.password) ) {
+        if(user && areSame) {
             req.session.user = user
             req.session.isAuthenticated = true
             req.session.save((err) => {
@@ -44,7 +45,7 @@ router.post('/register', async(req, res) => {
             req.flash('registerError', 'Email уже используется' )
             res.redirect('/auth/login#login')
         } else {
-            const hashPassword = bcrypt.hash(regpassword, 10)
+            const hashPassword = await bcrypt.hash(regpassword, 10)
             const user = new User({
                 email: regemail, password: hashPassword, name, cart: {items: []}
                 });
