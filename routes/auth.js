@@ -1,9 +1,12 @@
 const {Router} = require('express'),
       User = require('../models/user'),
       bcrypt = require('bcryptjs'),
+      emailText = require('../email/registration'),
+      sgMail = require('@sendgrid/mail');
       router = Router();
 
 router.get('/login', async (req, res) => {
+    
     res.render('auth/login', {
         title: 'Авторизация',
         isLogin: true,
@@ -12,21 +15,23 @@ router.get('/login', async (req, res) => {
     })
 })
 
-router.post('/login', async(req, res) => {
+router.post('/login', async (req, res) => {
     try {
         const {email, password} = req.body;
-        const user = await User.findOne({ email }),
-              areSame = await bcrypt.compare(password, user.password);
+        const user = await User.findOne({ email });
 
-        if(user && areSame) {
-            req.session.user = user
-            req.session.isAuthenticated = true
-            req.session.save((err) => {
-                if(err) {
-                    throw err
-                }
-                res.redirect('/')
-            })
+        if(user)  {
+            const areSame = await bcrypt.compare(password, user.password);
+                if(areSame) {
+                req.session.user = user
+                req.session.isAuthenticated = true
+                req.session.save((err) => {
+                    if(err) {
+                        throw err
+                    }
+                    res.redirect('/')
+                })
+            }
         } else {
             req.flash('loginError', 'Неправильный логин или пароль')
             res.redirect('/auth/login#login')
@@ -36,20 +41,23 @@ router.post('/login', async(req, res) => {
     }
 })
 
-router.post('/register', async(req, res) => {
+
+router.post('/register', async (req, res) => {
     try{
-        const {regemail, name, regpassword, confirm} = req.body;
-        const candidate = await User.findOne({ regemail });
+        let {regemail, name, regpassword, confirm} = req.body;
+        regemail = regemail.toLowerCase();
+        const candidate = await User.findOne({email: regemail});
     
         if(candidate) {
-            req.flash('registerError', 'Email уже используется' )
-            res.redirect('/auth/login#login')
+            req.flash('registerError', 'Email уже используется')
+            res.redirect('/auth/login#register')
         } else {
             const hashPassword = await bcrypt.hash(regpassword, 10)
             const user = new User({
-                email: regemail, password: hashPassword, name, cart: {items: []}
+                email: regemail.toLowerCase(), password: hashPassword, name, cart: {items: []}
                 });
             await user.save()
+            await sgMail.send(emailText(regemail, regpassword))
             res.redirect('/auth/login#login')
         }
     } catch(e) {
