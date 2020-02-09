@@ -8,8 +8,7 @@ const express = require('express'),
       csrf = require('csurf'),
       flash = require('connect-flash'),
       keys = require('./keys'),
-      sgClient = require('@sendgrid/client');
-    //   sgMail = require('@sendgrid/mail');
+      sgMail = require('@sendgrid/mail');
 
 
 //Маршрутизаторы
@@ -33,12 +32,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const store = new MongoStore({
     collection: 'session',
-    uri: keys.MONGODB_URI || process.env.MONGODB_URI,
+    uri: keys.MONGODB_URI,
 })
 
 app.use(express.urlencoded({extended:true}))
 app.use(session({
-    secret: keys.SESSION_SECRET || 'some secret value',
+    secret: keys.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store
@@ -72,22 +71,13 @@ app.use('/auth', authRouter)
 //SENDGRID
 // using Twilio SendGrid's v3 Node.js Library
 // https://github.com/sendgrid/sendgrid-nodejs
-const sgMail = require('@sendgrid/mail');
-sgMail.setApiKey(keys.SENDGRID_API_KEY || process.env.SENDGRID_API_KEY);
-const msg = {
-  to: 'test@example.com',
-  from: 'test@example.com',
-  subject: 'Sending with Twilio SendGrid is Fun',
-  text: 'and easy to do anywhere, even with Node.js',
-  html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-};
-sgMail.send(msg);
+sgMail.setApiKey(keys.SENDGRID_API_KEY);
 
 //Подключение БД
 async function start() {
     try{
         const PORT = process.env.PORT || 3000,
-              url = keys.MONGODB_URI || process.env.MONGODB_URI;
+              url = keys.MONGODB_URI;
 
         await mongoose.connect(url, {
             useNewUrlParser: true,
