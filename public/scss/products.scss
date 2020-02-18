@@ -1,4 +1,9 @@
 .card {
+
+    .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating){
+        margin-right: 0;
+    }
+    
     .card-title--products {
         margin: 0;
         padding: 14px 24px;

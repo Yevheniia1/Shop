@@ -10,12 +10,15 @@
             </div>
             <h3 class="card-title card-title--products">{{title}}</h3>
             <div class="card-content product__price">
-                <p>{{price}}</p>
+                <p class="currency">{{price}}</p>
             </div>
             <div class="card-action card-action--products">
                 <a href="/products/{{id}}" target="_blank">Больше</a>
                 {{#if @root.isAuth}}
-                <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
+
+                    {{#ifAdmin userId._id}}
+                    <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
+                    {{/ifAdmin}}
                 <form action="/cart/add" method="POST" class="card-action__form">
                     <input type="hidden" name="id" value="{{id}}">
                     <input type="hidden" name="_csrf" value="{{@root.csrf}}">

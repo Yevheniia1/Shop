@@ -17,7 +17,7 @@
                 <tr>
                     <td>{{title}}</td>
                     <td>{{quantity}}</td>
-                    <td>{{price}}</td>
+                    <td class="currency">{{price}}</td>
                     <td>
                         <button type="button" class="btn btn-small js-remove" data-id="{{id}}" data-csrf="{{@root.csrf}}">Удалить</button>
                     </td>
@@ -26,7 +26,7 @@
 
         </tbody>
     </table>
-    <p>Сумма к оплате: <strong class="product__price">{{price}}</strong></p>
+    <p>Сумма к оплате: <strong class="product__price currency">{{price}}</strong></p>
     <form action="/orders" method="POST">
         <input type="hidden" name="_csrf" value="{{@root.csrf}}">
         <button type="submit" class="btn">Заказать</button>
@@ -34,5 +34,5 @@
     {{else}}
         <p>Товаров в корзине пока нет</p>
 
-{{/if}}
+    {{/if}}
 </div>

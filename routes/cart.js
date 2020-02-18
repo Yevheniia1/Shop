@@ -1,7 +1,6 @@
 const {Router} = require('express');
 const auth = require('../middleware/auth');
 const router = Router();
-
 const Product = require('../models/products');
 
 function mapCartItems(cart) {
@@ -14,7 +13,6 @@ function mapCartItems(cart) {
 }
 
 function computePrice(products) {
-    // console.log('cart', user.cart.items)
     return products.reduce((total, product) => {
         return total += product.price * product.quantity
     }, 0)

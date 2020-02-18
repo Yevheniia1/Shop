@@ -4,26 +4,40 @@ const Products = require('../models/products')
 
 const router = Router();
 
+function isAdmin(userId, req) {
+    return req.user._id.toString() === userId.toString();
+}
+
 router.get('/', async (req, res) => {
     const productsList = await Products.find();
     res.render('products', {
         title: 'Товары',
         isProducts: true,
+        userId: req.user ? req.user._id.toString() : null,
         productsList
     })
 })
 
 router.get('/:id/edit', auth, async (req, res) => {
-    if(!req.query.allow) { 
-        return res.redirect('/')
+    try{
+        if(!req.query.allow) { 
+            return res.redirect('/')
+        }
+    
+        const product = await Products.findById(req.params.id);
+
+        if(!isAdmin(product.userId, req)) {
+           return res.redirect('/products')
+        }
+    
+        res.render('product-edit', {
+            title: `Редактировать ${product.title}`,
+            product
+        })
+    } catch(err) {
+        console.log(err)
     }
-
-    const product = await Products.findById(req.params.id);
-
-    res.render('product-edit', {
-        title: `Редактировать ${product.title}`,
-        product
-    })
+    
 })
 
 router.post('/edit', auth, async (req, res) => {

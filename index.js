@@ -8,7 +8,8 @@ const express = require('express'),
       csrf = require('csurf'),
       flash = require('connect-flash'),
       keys = require('./keys'),
-      sgMail = require('@sendgrid/mail');
+      sgMail = require('@sendgrid/mail'),
+      hbsHelpers = require('./utils/helpers-hbs');
 
 
 //Маршрутизаторы
@@ -52,7 +53,8 @@ app.use(userMiddlewear)
 //Подключение и регистрация handlebars
 const hbs = exphbs.create({
     defaultLayout: 'main',
-    extname: 'hbs'
+    extname: 'hbs',
+    helpers: hbsHelpers,
 });
 
 app.engine('hbs', hbs.engine)

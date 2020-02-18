@@ -1,6 +1,17 @@
 
 //Инициализация табов (на странице авторизации)
-M.Tabs.init(document.querySelectorAll('.tabs')); 
+const $loginPage = document.querySelector('.auth');
+if($loginPage) {
+    M.Tabs.init(document.querySelectorAll('.tabs')); 
+}
+
+//Отображение в валюте
+function toCurrency(num) {
+    return new Intl.NumberFormat('ua-UA', {
+        currency: 'uah',
+        style: 'currency'
+    }).format(num)
+}
 
 //Настройка отображения даты
 const toDate = date => {
@@ -18,17 +29,9 @@ document.querySelectorAll('.orders__date').forEach( node => {
     node.textContent = toDate(node.textContent)
 })
 
-//Настройка отображения валюты
-function toCurrency(num) {
-    return new Intl.NumberFormat('ua-UA', {
-        currency: 'uah',
-        style: 'currency'
-    }).format(num)
-}
-
-document.querySelectorAll('.product__price').forEach( productPrice => {
-    const PRICE = parseFloat(productPrice.textContent);
-    productPrice.textContent = toCurrency(PRICE)
+document.querySelectorAll('.currency').forEach( value => {
+    const price = parseFloat(value.textContent);
+    value.textContent = toCurrency(price)
 })
 
 //Динамическая перерисовка корзины для удаления товаров
@@ -52,12 +55,11 @@ if($cart) {
             .then(cart => {
                 if(cart.products.length) {
                     const html = cart.products.map( p => {
-                        const price = toCurrency(p.price);
                         return `
                         <tr>
                             <td>${p.title}</td>
                             <td>${p.quantity}</td>
-                            <td>${price}</td>
+                            <td>${p.price}</td>
                             <td>
                                 <button type="button" class="btn btn-small js-remove" data-id="${p.id}">Удалить</button>
                             </td>
@@ -74,6 +76,5 @@ if($cart) {
         }
     })
 }
-
 
 
