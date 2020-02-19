@@ -69,5 +69,9 @@ exports.loginValidators = [
 ]
 
 exports.productValidation = [
-    
+    body('title', 'Название должно состоять минимум из 3 символов')
+        .isLength({min: 3})
+        .trim(),
+    body('price', 'Введите корректную цену')
+        .isNumeric(),
 ]

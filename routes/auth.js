@@ -26,7 +26,7 @@ router.post('/login', loginValidators, async (req, res) => {
     if(!errors.isEmpty()) {
         req.flash('loginError', errors.array()[0].msg);
 
-        return res.redirect('/auth/login#login')
+        return res.status(422).redirect('/auth/login#login')
     }
 
     res.redirect('/')

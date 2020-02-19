@@ -1,5 +1,9 @@
 <h1>Редактировать: {{product.title}}</h1>
 
+{{#if error}}
+   <p class="alert">{{error}}</p>
+{{/if}}
+
 <form action="/products/edit" method="POST">
     <input type="hidden" name="id" value="{{product.id}}"></input>
 

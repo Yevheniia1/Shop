@@ -1,7 +1,9 @@
 const {Router} = require('express');
 const auth = require('../middleware/auth');
 const Products = require('../models/products');
-const keys = require('../keys/index')
+const keys = require('../keys/index');
+const {productValidation} = require('../utils/validation');
+const {validationResult} = require('express-validator');
 
 const router = Router();
 
@@ -16,7 +18,7 @@ router.get('/', async (req, res) => {
             title: 'Товары',
             isProducts: true,
             userId: req.user ? req.user._id.toString() : null,
-            productsList
+            productsList,
         })
     } catch(err) {
         console.log(err)
@@ -37,6 +39,7 @@ router.get('/:id/edit', auth, async (req, res) => {
     
         res.render('product-edit', {
             title: `Редактировать ${product.title}`,
+            error: req.flash('error'),
             product
         })
     } catch(err) {
@@ -44,10 +47,17 @@ router.get('/:id/edit', auth, async (req, res) => {
     }
 })
 
-router.post('/edit', auth, async (req, res) => {
+router.post('/edit', auth, productValidation, async (req, res) => {
     try {
+
         const {id} = req.body;
         delete req.body.id;
+
+        const errors = validationResult(req);
+        if(!errors.isEmpty()) {
+            req.flash('error', errors.array()[0].msg)
+            return res.status(422).redirect(`/products/${id}/edit?allow=true`)
+        }
 
         if(isAdmin(req.user._id)) {
             await Products.findByIdAndUpdate(id, req.body);
