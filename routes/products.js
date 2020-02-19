@@ -49,7 +49,6 @@ router.get('/:id/edit', auth, async (req, res) => {
 
 router.post('/edit', auth, productValidation, async (req, res) => {
     try {
-
         const {id} = req.body;
         delete req.body.id;
 

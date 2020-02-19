@@ -9,7 +9,8 @@ const express = require('express'),
       flash = require('connect-flash'),
       keys = require('./keys'),
       sgMail = require('@sendgrid/mail'),
-      hbsHelpers = require('./utils/helpers-hbs');
+      hbsHelpers = require('./utils/helpers-hbs'),
+      errorHandler = require('./middleware/error');
 
 
 //Маршрутизаторы
@@ -69,6 +70,8 @@ app.use('/cart', cartRouter)
 app.use('/add', addRouter)
 app.use('/orders', ordersRouter)
 app.use('/auth', authRouter)
+
+app.use(errorHandler)
 
 //SENDGRID
 // using Twilio SendGrid's v3 Node.js Library
