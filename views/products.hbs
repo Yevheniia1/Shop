@@ -16,7 +16,7 @@
                 <a href="/products/{{id}}" target="_blank">Больше</a>
                 {{#if @root.isAuth}}
 
-                    {{#ifAdmin userId._id}}
+                    {{#ifAdmin @root.userId}}
                     <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
                     {{/ifAdmin}}
                 <form action="/cart/add" method="POST" class="card-action__form">
