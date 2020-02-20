@@ -1,0 +1,21 @@
+<h1>Личный кабинет</h1>
+{{#if error}}
+    <p class="alert">{{error}}</p>
+{{/if}}
+<div class="row">
+    <form class="col s12" action="/profile" method="POST">
+        <div class="row">
+            <div class="input-field l6 offset-m3">
+                <input id="name" name="name" type="text" class="validate" required value="{{user.name}}">
+                <label for="name">Ваше имя</label>
+                <span class="helper-text" data-error="Введите имя"></span>
+            </div>
+              <div class="input-field l6 offset-m3">
+                <input id="email" name="email" type="email" readonly value="{{user.email}}">
+                <label for="name">Ваш email</label>
+            </div>
+            <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+            <button class="btn btn-primary" type="submit">Обновить</button>
+        </div>
+    </form>
+</div>

@@ -75,3 +75,9 @@ exports.productValidation = [
     body('price', 'Введите корректную цену')
         .isNumeric(),
 ]
+
+exports.profileValidation = [
+    body('name', 'Имя должно состоять минимум из 2 символов')
+        .isLength({min: 2, max: 56})
+        .trim(),
+]
