@@ -32,7 +32,7 @@ router.post('/', auth, productValidation, async (req, res) => {
         const product = new Product({
             title: req.body.title,
             price: req.body.price,
-            img: req.body.img,
+            img: req.file.path,
             userId: req.user._id
         })
         await product.save();

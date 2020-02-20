@@ -25,13 +25,15 @@ const homeRouter = require('./routes/home'),
 
 //Middleware
 const varMiddleware = require('./middleware/variables'),
-      userMiddlewear = require('./middleware/user');
+      userMiddlewear = require('./middleware/user'),
+      fileMiddlewear = require('./middleware/file');
 
 //Создание приложения
 const app = express();
 
 //Загрузка статических каталогов
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 
 const store = new MongoStore({
     collection: 'session',
@@ -45,6 +47,7 @@ app.use(session({
     saveUninitialized: false,
     store
 }))
+app.use(fileMiddlewear.single('img'))
 app.use(csrf())
 app.use(flash())
 app.use(varMiddleware)

@@ -47,9 +47,11 @@ router.get('/:id/edit', auth, async (req, res) => {
     }
 })
 
-router.post('/edit', auth, productValidation, async (req, res) => {
-    try {
+
+router.post('/edit', auth, productValidation,  async (req, res) => {
+        try {
         const {id} = req.body;
+        
         delete req.body.id;
 
         const errors = validationResult(req);
@@ -59,7 +61,22 @@ router.post('/edit', auth, productValidation, async (req, res) => {
         }
 
         if(isAdmin(req.user._id)) {
-            await Products.findByIdAndUpdate(id, req.body);
+            const product = await Products.findById(id);
+            const fileData = req.file;
+
+            if(!fileData) {
+                res.redirect('/products')
+                return console.log('Ошибка загрузки изображения')
+            }
+            const toChange = {
+                title: req.body.title,
+                price: req.body.price,
+                img: fileData.path
+            }
+
+            Object.assign(product, toChange)
+            await product.save()
+            console.log(product)
         }
 
         res.redirect('/products')

@@ -2,34 +2,28 @@ const {Router} = require('express'),
       User = require('../models/user'),
       {validationResult} = require('express-validator'),
       {profileValidation} = require('../utils/validation'),
+      auth = require('../middleware/auth'),
       router = Router();
 
-router.get('/', (req, res) => {
+router.get('/', auth, (req, res) => {
     return res.render('profile', {
         title: 'Личный кабинет',
         isProfile: true,
-        user: req.session.user,
+        user: req.user.toObject(),
         error: req.flash('error')
     })
 })
 
-router.post('/', profileValidation, async (req, res) => {
+router.post('/', auth, profileValidation, async (req, res) => {
     try{
         const errors = validationResult(req);        
         if(!errors.isEmpty()){
             req.flash('error', errors.array()[0].msg)
             return res.status(422).redirect('/profile')
         }
-
-        await User.findByIdAndUpdate(req.user, req.body)
-        const user = await User.findOne({ _id: req.user })
-        res.render('profile', {
-            title: 'Личный кабинет',
-            isProfile: true,
-            error: req.flash('error'),
-            user
-        })
-
+        const user = await User.findByIdAndUpdate(req.user, req.body);
+        await user.save()
+        res.redirect('profile')
     } catch(err) {
         console.log(err)
     }
