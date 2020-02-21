@@ -1,4 +1,3 @@
-//Модули
 const express = require('express'),
       exphbs = require('express-handlebars'),
       path = require('path'),
@@ -7,6 +6,8 @@ const express = require('express'),
       MongoStore = require('connect-mongodb-session')(session),
       csrf = require('csurf'),
       flash = require('connect-flash'),
+      helmet = require('helmet'),
+      compression = require('compression'),
       keys = require('./keys'),
       sgMail = require('@sendgrid/mail'),
       hbsHelpers = require('./utils/helpers-hbs'),
@@ -50,6 +51,8 @@ app.use(session({
 app.use(fileMiddlewear.single('img'))
 app.use(csrf())
 app.use(flash())
+app.use(helmet())
+app.use(compression())
 app.use(varMiddleware)
 app.use(userMiddlewear)
 

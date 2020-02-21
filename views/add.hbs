@@ -7,13 +7,13 @@
 <form action="/add" method="POST" enctype="multipart/form-data">
 
     <div class="input-field">
-        <input id="title" name="title" type="text" class="validate" required value={{data.title}}>
+        <input id="title" name="title" type="text" class="validate" required value="{{data.title}}">
         <label for="title">Название товара</label>
         <span class="helper-text" data-error="Введите название"></span>
     </div>
 
     <div class="input-field">
-        <input id="price" name="price" type="number" class="validate" value={{data.price}} required min="1">
+        <input id="price" name="price" type="number" class="validate" value="{{data.price}}" required min="1">
         <label for="price">Цена товара</label>
         <span class="helper-text" data-error="Введите цену"></span>
     </div>
