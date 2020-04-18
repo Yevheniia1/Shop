@@ -1,0 +1,12 @@
+.product-table {
+    thead {
+        @extend .grey, .lighten-3;
+    }
+    th, td, td>input {
+        font-size: 1rem!important;
+
+        @media #{$small-and-down} {
+            font-size: .8rem!important;
+        }
+    }
+}

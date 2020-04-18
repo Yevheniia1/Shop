@@ -1,0 +1,55 @@
+{{#if checkoutError}}
+    <p class="alert">{{checkoutError}}</p>
+{{/if}}
+<legend class="main-title">Адрес доставки</legend>
+
+<div class="input-field" id="city">
+    <input autocomplete type="text" name="city" class="validate" required min="1">
+    <label for="city">Город доставки</label>
+    <span class="helper-text" data-error="Введите город"></span>
+</div>
+
+<label class="delivery-option np-department checked">
+    <input id="npDepartment" name="delivery" type="radio" value="npDepartment" required/>
+    <span>Новая почта (самовывоз из отделения)</span>
+</label>
+
+<label class="delivery-option np-address">
+    <input id="npAddress" name="delivery" type="radio" value="npAddress" required/>
+    <span>Новая почта (курьерская доставка)</span>
+</label>
+
+<label class="delivery-option ukrposhta">
+    <input id="ukrposhta" name="delivery" type="radio" value="ukrposhta" required/>
+    <span>Укрпочта</span>
+</label>
+
+<div class="form-fragment"></div>
+
+<div class="visually-hidden">
+    <div class="input-field" id="locality" >
+        <input autocomplete type="text" name="locality" class="validate" min="2">
+        <label for="locality">Населенный пункт</label>
+        <span class="helper-text" data-error="Введите навеленный пункт"></span>
+    </div>
+    <div class="input-field" id="department">
+        <input autocomplete type="number" name="department" class="validate"  min="1">
+        <label for="department">Номер отделения</label>
+        <span class="helper-text" data-error="Введите номер отделения"></span>
+    </div>
+    <div class="input-field" id="postal-code">
+        <input autocomplete type="number" name="postalCode" class="validate" min="5" >
+        <label for="postal-code">Почтовый индекс</label>
+        <span class="helper-text" data-error="Введите почтовый индекс"></span>
+    </div>
+    <div class="input-field" id="street">
+        <input autocomplete type="text" name="street" class="validate" min="2" >
+        <label for="street">Улица</label>
+        <span class="helper-text" data-error="Введите улицу"></span>
+    </div>
+    <div class="input-field" id="apartment">
+        <input autocomplete type="number" name="apartment" class="validate" min="1" >
+        <label for="apartment">Номер квартиры</label>
+        <span class="helper-text" data-error="Введите номер квартиры"></span>
+    </div>
+</div>

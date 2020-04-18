@@ -69,7 +69,7 @@ router.post('/edit', auth, productValidation,  async (req, res) => {
                 return console.log('Ошибка загрузки изображения')
             }
             const toChange = {
-                title: req.body.title,
+                name: req.body.title,
                 price: req.body.price,
                 img: fileData.path
             }
@@ -100,10 +100,14 @@ router.get('/:id', async (req, res) => {
     try {
         const product = await Products.findById(req.params.id);
         res.render('product', {
-            layout: 'empty',
             section: 'products',
             title: `Товар ${product.title}`,
-            product
+            img: product.img,
+            name: product.name,
+            price: product.price,
+            id: product.id,
+            productPage: true
+            
         })
     } catch(err) {
         console.log(err)

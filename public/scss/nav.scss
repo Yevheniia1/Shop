@@ -1,41 +1,162 @@
-.nav-wrapper {
-    padding: 0 2rem;
-}
+.main-nav-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: .3rem;
+    @extend .black;
 
-@media only screen and (max-width: 992px) {
-    .row--products {
-        flex-wrap: wrap;
-    }
-
-    nav {
-        height: auto;
-    }
-
-    nav .nav-wrapper {
-        height: auto;
+    // SIDENAV
+        
+    .sidenav-wrapper {
+        padding: 0.3rem 2rem;
         display: flex;
-        flex-direction: column;
-        padding: 0;
-        margin-bottom: 30px;
+        justify-content: space-between;
+        align-items: baseline;
+
+        @extend .red, .darken-1;
+
+        @media #{$medium-and-down} {
+            padding: .5rem .5rem 0;
+            background-color: #000000!important; //.black
+        }
+
+        .sidenav {
+            .background img {
+                width: 100%;
+                object-fit: cover;
+            }
+        }
+
+        .sidenav-trigger {
+            font-family: 'Comfortaa', cursive;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            @extend .black-text;
+            font-size: .7rem;
+
+            @media #{$medium-and-down} {
+                font-size: .7rem;
+                color: #eeeeee!important; //.grey-text, .text-lighten-2;
+            }
+            i {
+                vertical-align: middle;
+                font-size: 1.2rem;
+
+                @media #{$medium-and-down} {
+                    font-size: 1.2rem;
+                }
+            }
+        }
     }
 
-    nav .brand-logo {
-        position: relative;
-        text-align: center;
+    // MAIN-NAV
+
+    .main-nav {
+        @extend .black;
+        padding: 0 2rem;
+
+        @media #{$small-and-down} {
+            height: auto;
+            order: 1;
+            padding: 0;
+        }
+
+        .nav-wrapper {
+
+            @media #{$medium-and-down} {
+                height: auto;
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                padding: 0;
+            }
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            @media #{$medium-and-down} {
+                height: auto;
+                position: static;
+                transform: none;
+             }
+
+            @media #{$small-and-down} {
+                width: 100%;
+                padding: .5rem 0;
+                justify-content: center;
+            }
+
+            img {
+                @include size(150px, auto);
+                margin: 0 10px 0 0;
+                object-fit: contain;
+            }
+
+            span {
+
+                @media #{$medium-and-down} {
+                   font-size: 1rem;
+                }
+
+                @media #{$small-and-down} {
+                    font-size: .8rem;
+                 }
+            }
+        }
+
+        .nav-list {
+
+            @media #{$small-and-down} {
+                display: flex;
+                background-color: #e53935;// .red .darken-1
+                width: 100%;
+            }
+
+            @media #{$small-and-down} {
+                flex-wrap: wrap;
+                line-height: 42px;
+            }
+
+            li a{
+                
+                font-family: 'Comfortaa', cursive;
+                text-transform: uppercase;
+
+                @media #{$medium-and-down} {
+                    font-size: 1rem;
+                    padding: 0 10px;
+                }
+
+                @media #{$small-and-down} {
+                    font-size: .7rem;
+                    padding: 0 10px;
+                }
+            }
+        }
     }
 
-    #nav-mobile {
-        display: flex;
-        background-color: #777777;
-    }
+    @media #{$medium-and-down} {
 
-    #nav-mobile li a {
-        font-size: 0.7rem;
-        padding: 0 0.7rem;
-        line-height: 3;
-    }
+        .row--products {
+            flex-wrap: wrap;
+        }
 
-    .menu-item-right {
-        margin-left: auto;
+    
+
+        #nav-mobile {
+            display: flex;
+        }
+
+        #nav-mobile li a {
+            font-size: 0.7rem;
+            padding: 0 0.7rem;
+            line-height: 3;
+        }
+
+        .menu-item-right {
+            margin-left: auto;
+        }
     }
 }

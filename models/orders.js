@@ -16,12 +16,16 @@ const ordersSchema = new Schema({
         name: String,
         userId: {
             type: Schema.Types.ObjectId,
-            required: true,
             ref: 'User'
-        }
-        
+        }, 
     },
-    data: {
+    guest: {
+        name: String,
+        email: String,
+        phone: Number,
+        token: String
+    },
+    date: {
         type: Date,
         default: Date.now
     }

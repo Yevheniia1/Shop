@@ -1,0 +1,22 @@
+{{#if checkoutError}}
+    <p class="alert">{{checkoutError}}</p>
+{{/if}}
+<legend class="main-title">Контактные данные</legend>
+
+<div class="input-field">
+    <input id="email" name="email" type="email" class="validate" required>
+    <label for="email">Email</label>
+    <span class="helper-text" data-error="Введите email"></span>
+</div>
+
+<div class="input-field">
+    <input id="name" name="name" type="text" class="validate" required>
+    <label for="name">Ваше имя</label>
+    <span class="helper-text" data-error="Введите имя"></span>
+</div>
+
+<div class="input-field">
+    <input id="phone" autocomplete type="tel" value="+380" name="phone" class="validate" placeholder="00 333-22-11" min="1" required>
+    <label for="phone">Номер телефона</label>
+    <span class="helper-text" data-error="Введите ваш номер телефона"></span>
+</div>

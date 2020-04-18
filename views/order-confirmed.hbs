@@ -1,0 +1,15 @@
+<div class="row order-confirmed">
+    <div class="col s12 content">
+        <h2 class="confirmed-title">Заказ <strong>№{{id}}</strong> принят успешно!</h2>
+        <p>Проверте свою почту для более подробной информации (письмо может быть в папке спам)</p>
+        <p class="icon"><i class="material-icons medium">done</i></p>
+        <a href="/products">Вернуться к покупкам</a>
+    </div>
+</div>
+<script>
+    if(localStorage.getItem('guestProfile')) {
+        const guestProfile = JSON.parse(localStorage.getItem('guestProfile'));
+        guestProfile.data.products = [];
+        localStorage.setItem('guestProfile', JSON.stringify(guestProfile))
+    }
+</script>

@@ -1,0 +1,37 @@
+<div class="guest-order checkout">
+    <div class="row">
+        <div class="col s12">
+            <a href="#" data-csrf="{{csrf}}" class="link-cart js-toGuestCart"><i class="tiny material-icons">chevron_left</i> Корзина</a>
+        </div>
+        <form action="/orders/guest-order/save{{token}}" class="col s12" method="POST">
+            <fieldset class="order-fieldset active" id="contact">
+                
+                {{> fieldset-contact}}
+
+                <button type="button" class="btn orders-nav next js-contactValidation">Далее <i class="tiny material-icons">arrow_forward</i></button>
+                
+                {{> auth-link}}
+
+                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+            </fieldset>
+
+            <fieldset class="order-fieldset" id="delivery">
+                
+                {{> fieldset-address}}
+
+                <label>
+                    <input id="payment" name="payment" type="radio" required/>
+                    <span>Оплата при получении</span>
+                </label>
+                <input type="hidden" name="csrf" value="{{@root.csrf}}">
+                <button class="btn btn-primary js-orderSubmit" type="submit">Оформить заказ</button>
+
+                {{> auth-link}}
+
+            </fieldset>
+        </form>
+    </div>
+</div>
+
+
+

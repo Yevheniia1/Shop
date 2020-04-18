@@ -1,37 +1,56 @@
-<h1>Товары</h1>
+<h1 class="main-title center">Кофе</h1>
 
 {{#if productsList.length}}
-<div class="row row--products">
+<div class="row row--products products product-cards">
     {{#each productsList}}
-    <div>
-        <div class="card card--products">
-            <div class="card-image">
-                <img src="{{img}}" alt="{{title}}">
-            </div>
-            <h3 class="card-title card-title--products">{{title}}</h3>
-            <div class="card-content product__price">
-                <p class="currency">{{price}}</p>
-            </div>
-            <div class="card-action card-action--products">
-                <a href="/products/{{id}}" target="_blank">Больше</a>
-                {{#if @root.isAuth}}
+    <div class="col s6 m4">
 
-                    {{#ifAdmin @root.userId}}
-                    <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
-                    {{/ifAdmin}}
-                <form action="/cart/add" method="POST" class="card-action__form">
-                    <input type="hidden" name="id" value="{{id}}">
-                    <input type="hidden" name="_csrf" value="{{@root.csrf}}">
-                    <button type="submit" class="btn btn-primary card-action__form__btn">Купить</button>
-                    <input type="number" min="1" value="1" name="quantity" class="card-action__form__quantity">
-                </form>
-                {{/if}}
-            </div>
-        </div>
+     <div class="card card--products">
+
+    {{#if productPage}}
+    <div class="card-image">
+        <img src="/{{img}}" alt="{{name}}" class="materialboxed">
     </div>
-    
-{{/each}}
+    <h3 class="card-title card-title--products">{{name}}</h3>
+    {{else}}
+    <a href="/products/{{id}}" target="_blank">
+        <div class="card-image">
+            <img src="/{{img}}" alt="{{name}}">
+        </div>
+        <h3 class="card-title card-title--products">{{name}}</h3>
+    </a>
+    {{/if}}
+
+    <div class="card-content card-price">
+        <p class="currency">{{price}}</p>
+    </div>
+    <div class="row card-action card-action--products">
+        {{#if @root.isAuth}}
+            {{#ifAdmin @root.userId}}
+            <a href="/products/{{id}}/edit?allow=true" >Редактировать</a>
+            {{/ifAdmin}}
+                <form action="/cart/add" method="POST" class="card-action__form">
+                <input type="hidden" name="id" value="{{id}}">
+                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+                
+                {{> buy-btn-user}}
+
+            </form>
+        {{else}}
+
+            {{> buy-btn-guest}}
+        
+        {{/if}}
+    </div>
+</div>
+
+        
+    </div>
+    {{/each}}
 </div>
 {{else}}
     <strong>Товаров пока нет</strong>
 {{/if}}
+
+
+

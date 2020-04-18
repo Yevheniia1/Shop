@@ -1,3 +1,27 @@
-@mixin m-devices {
-    @media screen and (max-width: 992px) { @content; }
+@mixin size($width, $height) {
+    width: $width;
+    height: $height;
 }
+
+@mixin showInputs($option, $inputsId...) {
+    @for $inputId from 0 to length($inputsId) {
+        .#{$option}.checked ~ ##{nth($inputsId, $inputId + 1)} {
+			display: block;
+        }
+    }
+}
+
+.visually-hidden:not(:focus):not(:active) {
+	width: 1px;
+	height: 1px;
+	margin: 1px;
+	padding: 0;
+	border: 0;
+
+	position: absolute;
+	white-space: nowrap;
+	clip: rect(0 0 0 0);
+	overflow: hidden;
+}
+
+

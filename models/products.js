@@ -1,7 +1,7 @@
 const {Schema, model} = require('mongoose');
 
 const productSchema = new Schema({
-    title: {
+    name: {
         type: String,
         required: true
     },
@@ -23,7 +23,6 @@ productSchema.method('toClient', function() {
     delete product._id
  
     return product
-
 })
 
 module.exports = model('Product', productSchema)

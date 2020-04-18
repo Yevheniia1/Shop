@@ -1,52 +1,69 @@
-<nav>
-    <div class="nav-wrapper">
-        <a href="/" class="brand-logo">Shop</a>
-        <ul id="nav-mobile" class="right">
+<div class="main-nav-wrapper">
+    <nav class="main-nav">
+        <div class="nav-wrapper">
+            <a href="/" class="brand-logo"><img src="../../images/logo.webp" alt="Сoffee shop Forto"></a>
+            <ul class="nav-list right">
 
-        {{#if isHome}}
-            <li class="active"><a href="/">Главная</a></li>
-        {{else}}
-            <li><a href="/">Главная</a></li>
-        {{/if}}
-
-        {{#if isProducts}}
-            <li class="active"><a href="/products">Товары</a></li>
-        {{else}}
-            <li><a href="/products">Товары</a></li>
-        {{/if}}
-
-        {{#if isAuth}}
-            {{#if isAdd}}
-                <li class="active"><a href="/add">Добавить</a></li class="active">
+            {{#if isHome}}
+                <li class="active"><a href="/">Главная</a></li>
             {{else}}
-                <li><a href="/add">Добавить</a></li>
+                <li><a href="/">Главная</a></li>
             {{/if}}
 
-            {{#if isProfile}}
-                <li class="active"><a href="/profile">Кабинет</a></li class="active">
+            {{#if isProducts}}
+                <li class="active"><a href="/products">Кофе</a></li>
             {{else}}
-                <li><a href="/profile">Кабинет</a></li>
+                <li><a href="/products">Кофе</a></li>
             {{/if}}
 
-            {{#if isCart}}
-                <li class="active"><a href="/cart">Корзина</a></li class="active">
-            {{else}}
-                <li><a href="/cart">Корзина</a></li>
-            {{/if}}
+            {{#if isAuth}}
 
-            {{#if isOrders}}
-                <li class="active"><a href="/orders">Заказы</a></li class="active">
+                {{#if isAdd}}
+                    <li class="active"><a href="/add">Добавить</a></li class="active">
+                {{else}}
+                    <li><a href="/add">Добавить</a></li>
+                {{/if}}
+
             {{else}}
-                <li><a href="/orders">Заказы</a></li>
+            
+                {{#if isCart}}
+                    <li class="active"><a href="/cart" data-csrf="{{@root.csrf}}" class="js-toGuestCart">Корзина</a></li>
+                {{else}}
+                    <li><a href="/cart" data-csrf="{{@root.csrf}}" class="js-toGuestCart">Корзина</a></li>
+                {{/if}}
+
+                {{#if isLogin}}
+                    <li class="active menu-item-right"><a href="/auth/login#login">Войти</a></li class="active">
+                {{else}}
+                    <li class="menu-item-right"><a href="/auth/login#login">Войти</a></li>
+                {{/if}}
+
             {{/if}}
-             <li  class="menu-item-right"><a href="/auth/logout">Выйти</a></li>
-        {{else}}
-            {{#if isLogin}}
-                <li class="active menu-item-right"><a href="/auth/login#login">Войти</a></li class="active">
-            {{else}}
-                <li class="menu-item-right"><a href="/auth/login#login">Войти</a></li>
-        {{/if}}
-        {{/if}}
+            </ul>
+        </div>
+    </nav>
+
+    {{#if isAuth}}
+    <div class="sidenav-wrapper">
+        <ul id="slide-out" class="sidenav">
+        <li>
+            <div class="user-view">
+                <div class="background">
+                    <img src="/images/background-sidenav.jpg">
+                </div>
+                <a href="#user"><img class="circle" src="/images/user.png"></a>
+                <a href="#name"><span class="white-text name">{{user.name}}</span></a>
+                <a href="#email"><span class="white-text email">{{user.email}}</span></a>
+            </div>
+        </li>
+        <li><a href="/cart"><i class="material-icons">shopping_basket</i>Корзина</a></li>
+        <li><a href="/orders"><i class="material-icons">done</i>Мои заказы</a></li>
+        <li><div class="divider"></div></li>
+        <li><a class="subheader">Настройки</a></li>
+        <li><a class="waves-effect" href="/profile">Редактировать данные</a></li>
         </ul>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons tiny">face</i> Профиль</a>
+        <a href="/auth/logout" class="sidenav-trigger">Выйти</a>
     </div>
-</nav>
+    {{/if}}
+</div>

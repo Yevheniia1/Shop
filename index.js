@@ -11,7 +11,9 @@ const express = require('express'),
       keys = require('./keys'),
       sgMail = require('@sendgrid/mail'),
       hbsHelpers = require('./utils/helpers-hbs'),
-      errorHandler = require('./middleware/error');
+      errorHandler = require('./middleware/error'),
+      LocalStorage = require('node-localstorage').LocalStorage,
+      localStorage = new LocalStorage('./scratch');
 
 
 //Маршрутизаторы
@@ -42,6 +44,8 @@ const store = new MongoStore({
 })
 
 app.use(express.urlencoded({extended:true}))
+app.use(express.json());
+
 app.use(session({
     secret: keys.SESSION_SECRET,
     resave: false,

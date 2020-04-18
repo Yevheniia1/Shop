@@ -1,12 +1,83 @@
+@import "./libs/materialize";
 @import "mixins";
 @import "nav";
 @import "products";
+@import "cart";
+
 
 @keyframes opacity{
     from { opacity: 0;}
     to { opacity: 1;}
 }
 
+.btn-close {
+    padding: 0 .5rem;
+}
+
+.page-title {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: .9rem;
+
+    @media #{$small-and-down} {
+    }
+}
+
+.page-desc {
+    font-size: .8rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.container {
+    @media #{$small-and-down} {
+        width: 98%;
+    }
+}
+
+.main-title {
+    font-size: 4rem;
+    line-height: 110%;
+    margin: 2.8rem 0 1.68rem 0;
+
+    @media #{$medium-and-down} {
+        font-size: 2.8rem;
+        margin: 2rem 0 1rem 0;
+    }
+
+    @media #{$small-and-down} {
+        font-size: 2rem;
+    }
+}
+
+.auth {
+    .input-field {
+        @media #{$medium-and-down} {
+            margin: .3rem 0;
+        }
+    }
+
+    .btn {
+        @media #{$medium-and-down} {
+            padding: 0 50px;
+        }
+
+        @media #{$small-and-down} {
+            width: 100%;
+        }
+    }
+}
+
+.btn {
+    @extend .amber, .darken-4;
+    @extend .waves-effect, .waves-light;
+}
+
+a.accent {
+    @extend .orange-text, .text-darken-4;
+}
 .alert {
     padding: .5em;
     color: rgb(255, 0, 0);
@@ -19,6 +90,158 @@
     content: '\203A';
 }
 
-.auth {
-    margin-top: 1rem;
+.tabs{
+    .tab a {
+        @extend .brown-text, .text-darken-4;
+
+        &:focus.active {
+            background-color: rgba(255, 233, 233, 0.2);
+        }
+    }
+
+    .indicator {
+        @extend .brown, .darken-4;
+    }
+} 
+
+.guest-order{
+
+    form {
+        position: relative;
+
+        fieldset {
+            border: none;
+            padding: 0 .75rem;
+            margin: 0 0 1rem 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            opacity: 0;
+            visibility: hidden;
+            height: 1px;
+            transition: .3s;
+        }
+    
+        fieldset.active {
+            visibility: visible;
+            height: auto;
+            opacity: 1;
+            transition: .3s;
+            z-index: 1;
+        }
+
+        #delivery{
+
+            .form-fragment {
+                min-height: 1rem;
+            }
+
+    
+        } 
+    }
+} 
+
+.checkout {
+    .delivery-option{
+        display: flex;
+        margin-bottom: 1rem;
+
+        span {
+            width: 80%;
+        }
+
+        [type="radio"]:not(:checked) + span, [type="radio"]:checked + span {
+            height: auto;
+        }
+
+        &.np-department:before, &.np-address:before {
+            background-image: url('../../images/np.png');
+        }
+
+        &.ukrposhta:before {
+            background-image: url('../../images/ukrposhta.png');
+        }
+
+        &:before {
+            content:"";
+            display: inline-block;
+            width: 20%;
+            height: 25px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+
+    @include showInputs("np-address", "locality", "street", "apartment");
+    @include showInputs("np-department", "locality", "department");
+    @include showInputs("ukrposhta", "locality", "postal-code");
+
+}
+
+
+
+.auth-link__wrapper {
+    margin-top: 20px;
+    a {
+        display: inline-block;
+        padding-right: 15px;
+
+        &:not(:first-child) {
+            padding-left: 15px;
+            border-left: 1px solid #2196f3;
+        }
+    }
+}
+
+.link-cart {
+    display: block;
+    padding: 1rem 0;
+}
+
+.orders-nav {
+    @extend .amber, .darken-1;
+
+    i {
+        vertical-align: top;
+        font-size: 1rem;
+    }
+}
+
+#cart {
+    .quantity {
+        width: 4rem;
+        text-align: center;
+    }
+}
+
+%center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.order-confirmed {
+   .content {
+       text-align: center;
+   }
+
+   .confirmed-title {
+    font-size: 2rem;
+   }
+
+    .icon {
+        @include size(5rem, 5rem);
+        @extend .green, .accent-3;
+        border-radius: 50%;
+        position: relative;
+        margin: 2rem auto;
+
+        i {
+            color: #ffffff;
+            @extend %center;
+        }
+    }
 }

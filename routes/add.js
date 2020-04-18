@@ -22,7 +22,7 @@ router.post('/', auth, productValidation, async (req, res) => {
                 isAdd: true,
                 error: errors.array()[0].msg,
                 data: {
-                    title: req.body.title,
+                    name: req.body.title,
                     price: req.body.price,
                     img: req.body.img
                 }
@@ -30,7 +30,7 @@ router.post('/', auth, productValidation, async (req, res) => {
         }
 
         const product = new Product({
-            title: req.body.title,
+            name: req.body.title,
             price: req.body.price,
             img: req.file.path,
             userId: req.user._id

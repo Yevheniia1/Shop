@@ -1,25 +1,63 @@
+
+
 .card {
+    box-shadow: none;
+
+    @media #{$small-and-down} {
+        margin-bottom: 0!important;
+     }
 
     .card-action a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating){
         margin-right: 0;
     }
+
+    .card-image {
+        
+        @media #{$medium-and-down} {
+           margin-bottom: 1rem;
+        }
+    }
     
     .card-title--products {
         margin: 0;
-        padding: 14px 24px;
+        padding: .5rem 1rem;
         color: #000000;
+        text-align: center;
         font-weight: 500;
         position: static;
+        font-size: 1.2rem;
+
+        @media #{$medium-and-down} {
+            font-size: 1rem;
+            padding: .5rem 0;
+        }
+
+        @media #{$small-and-down} {
+            font-size: .9rem;
+        }
     }
 
     .card-price {
         font-size: 2rem;
-        padding: 14px 24px;
+        font-size: 1.2rem;
+        text-align: center;
+        padding: .5rem 1rem;
+        margin-bottom: .8rem;
+
+
+        @media #{$medium-and-down} {
+            font-size: 1.2rem;
+            padding: 0;
+            margin-bottom: .5rem;
+        }
+
+        @media #{$small-and-down} {
+            font-size: .9rem;
+        }
     }
 
     &--products {
         height: 100%;
-        margin: 0 1rem 1rem;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -32,42 +70,68 @@
         flex-wrap: wrap;
         align-items: flex-start;
     }
+
+    .card-action {
+
+        &--products {
+            margin-left: 0!important;
+            padding: .5rem 0;
+            margin-right: 0!important;
+    
+            @media #{$medium-and-down} {
+                padding: .5rem 0;
+                margin-bottom: 1rem;
+            }
+
+            @media #{$small-and-down} {
+                margin-bottom: .5rem;
+            }
+        }
+        
+        &__form {
+            width: 100%;
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+        }
+    
+        &__form__quantity {
+            width: 20% !important;
+            height: 2.5rem !important;
+            text-align: center;
+
+            @media #{$small-and-down} {
+                font-size: 1rem;
+                height: 1.8rem !important;
+            }
+        }
+    
+        &__form__btn {
+            width: 70% !important;
+            @media #{$small-and-down} {
+                font-size: 1rem;
+                height: 1.8rem !important;
+                line-height: 1.8rem;
+            }
+        }
+    
+        a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
+            margin-right: 0;
+            text-transform: none;
+            font-size: .8rem;
+        }
+    }
 }
 
-.card-action {
-    &__form {
-        width: 100%;
-        margin-top: 1.5rem;
-        display: flex;
-        justify-content: space-between;
-        align-items: baseline;
-    }
 
-    &__form__quantity {
-        width: 20% !important;
-        height: 2.5rem !important;
-        text-align: center;
-    }
-
-    &__form__btn {
-        width: 70% !important;
-    }
-
-    a:not(.btn):not(.btn-large):not(.btn-small):not(.btn-large):not(.btn-floating) {
-        margin-right: 0;
-        text-transform: none;
-        font-size: .8rem;
-    }
-}
 
 
 .row--products {
-    display: flex;
-    align-items: stretch;
 
-    @include m-devices {
-            flex-wrap: wrap;
-    }
+    // @media #{$small-and-down} {
+    //         flex-wrap: wrap;
+    // }
 
     div {
         margin-bottom: 2rem;
@@ -81,9 +145,15 @@
     align-items: center;
 
     &__title {
+        font-family: 'Open Sans', sans-serif;
         font-size: 1.5rem;
         margin: 2rem 0;
+        text-align: center;
         font-weight: 700;
+
+        @media #{$small-and-down} {
+            margin: .5rem 0;
+        }
     }
 
     &__img {
@@ -92,9 +162,15 @@
     }
 
     &__price {
-        font-size: 2rem;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 1.5rem;
         padding-top: 0!important;
         padding-bottom: 0!important;
+
+        @media #{$small-and-down} {
+            font-size: 1rem;
+            margin: .5rem 0;
+        }
     }
 
     &__price.big {

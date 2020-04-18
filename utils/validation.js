@@ -81,3 +81,13 @@ exports.profileValidation = [
         .isLength({min: 2, max: 56})
         .trim(),
 ]
+
+exports.orderValidatiion = [
+    body('email', 'Введите корректный email')
+    .isEmail(),
+    body('name', 'Имя должно состоять минимум из 2 символов')
+        .isLength({min: 2, max: 56})
+        .trim(),
+    body('phone', 'Введите номер телефона в формате +38099 999-99-99')
+    .matches(/\+380\d{2}\d{3}-\d{2}-\d{2}/),
+]
