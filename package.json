@@ -18,16 +18,16 @@
   "author": "Yevheniia <y.potiichuk@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "nodemon": "^2.0.1",
+    "sass": "^1.26.5"
+  },
+  "dependencies": {
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
     "css-loader": "^3.5.3",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "image-webpack-loader": "^6.0.0",
-    "nodemon": "^2.0.1",
-    "sass": "^1.26.5",
-    "sass-loader": "^8.0.2",
-    "style-loader": "^1.2.1"
-  },
-  "dependencies": {
     "@glidejs/glide": "^3.4.1",
     "@sendgrid/client": "^6.5.1",
     "@sendgrid/mail": "^6.5.2",
