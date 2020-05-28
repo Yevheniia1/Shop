@@ -1,3 +1,15 @@
-.product-table th, .product-table td {
-  text-align: center;
-  font-size: 1rem; }
+.cart__tcell_product {
+  display: flex;
+  align-items: center;
+  text-align: center; }
+  .cart__tcell_product .cart__product-img {
+    max-width: 100px; }
+
+.auth-link__wrapper {
+  margin-top: 20px; }
+  .auth-link__wrapper a {
+    display: inline-block;
+    padding-right: 15px; }
+    .auth-link__wrapper a:not(:first-child) {
+      padding-left: 15px;
+      border-left: 1px solid #2196f3; }

@@ -1,0 +1,65 @@
+html {
+    font-size: 93.75%;
+}
+
+body {
+    font-size: 100%;
+}
+
+//Typography
+
+.currency {
+    @extend .black-text;
+}
+
+.title_large {
+    font-family: $font-primary;
+    font-size: 4rem;
+    font-weight: 500;
+    line-height: 110%;
+    margin: 3rem 0 1.8rem 0;
+
+    @media #{$medium-and-down} {
+        font-size: 2.8rem;
+        margin: 2rem 0 1rem 0;
+    }
+
+    @media #{$small-and-down} {
+        font-size: 2rem;
+    }
+}
+
+.title_medium {
+    font-family: $font-primary;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 2rem;
+    margin-bottom: .9rem;
+
+    @media #{$small-and-down} {
+        font-size: 1.2rem;
+    }
+}
+
+.title_small {
+    font-family: $font-primary;
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1.3rem;
+    margin-bottom: .7rem;
+
+    @media #{$small-and-down} {
+        font-size: 1rem;
+    }
+}
+
+.description {
+    font-family: $font-primary;
+    font-size: .8rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.breadcrumb:before {
+    content: '\203A';
+}

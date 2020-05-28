@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
         user: req.user ? req.user.toObject() : null,
         orderEnd: false
     })
-
 })
 
 module.exports = router

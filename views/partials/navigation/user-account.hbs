@@ -1,0 +1,28 @@
+ {{#if isAuth}}
+    <div class="user-account__wrapper">
+        <ul id="slide-out" class="sidenav user-account">
+            <li>
+                <div class="user-view">
+                    <div class="background">
+                        <img class="user-account__background" src="/images/background-sidenav.jpg">
+                    </div>
+                    <img class="circle" src="/images/user.png">
+                    <a href="/profile"><span class="white-text name">{{user.name}}</span></a>
+                    <a href="/profile"><span class="white-text email">{{user.email}}</span></a>
+                </div>
+            </li>
+            <li><a href="/cart"><i class="material-icons">shopping_basket</i>Корзина</a></li>
+            <li><a href="/orders"><i class="material-icons">done</i>Мои заказы</a></li>
+            <li><div class="divider"></div></li>
+            <li><a class="subheader">Настройки</a></li>
+            <li><a class="waves-effect" href="/profile">Редактировать данные</a></li>
+            {{#ifAdmin @root.user._id}}
+                <li><a class="link navigation__link" href="/add"><i class="material-icons">add</i>Добавить товар</a></li>
+            {{/ifAdmin}}
+            <li><a class="waves-effect" href="/auth/logout"><i class="material-icons">exit_to_app</i>Выйти</a></li>
+        </ul>
+
+        {{!-- TRIGGER --}}
+        <a href="#" data-target="slide-out" class="sidenav-trigger user-account__trigger"><i class="material-icons">person</i></a>
+    </div>
+{{/if}}

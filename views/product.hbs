@@ -1,16 +1,24 @@
-<div class="row product-cards">
-    <div class="col s12 m6">
 
-        {{> product-card}}
+<div class="row product-cards" id="product">
+
+     <div class="col s12 m6">
+
+       {{#each category}}
+          <a href="/products/category/{{this}}">{{this}}</a>
+        {{/each}}
+
+        {{> product/slider}}
+
+        {{> button/buy-product}}
 
     </div>
-   
     <div class="description col s12 m6">
         <h4>Описание</h4>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quod, nesciunt ex enim aperiam neque molestiae minus placeat ipsa perspiciatis!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quod, nesciunt ex enim aperiam neque molestiae minus placeat ipsa perspiciatis!</p>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatibus quod, nesciunt ex enim aperiam neque molestiae minus placeat ipsa perspiciatis!</p>
+        <p>{{description}}</p>
     </div>
+    
 </div>
+
+
 
 

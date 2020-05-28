@@ -1,0 +1,88 @@
+
+<table class="highlight cart__table table">
+
+    {{#if isCart}}
+
+    <thead class="thead cart__thead">
+        <tr>
+            <th></th>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+
+    <tbody class="tbody cart__tbody">
+
+        {{#if @root.isAuth}}
+
+        {{#each products}}
+        <tr class="cart-product">
+            <td class="tcell">
+                <button type="button" class="btn button button_close_small js-remove-user" data-id="{{id}}" data-csrf="{{@root.csrf}}"></button>
+            </td>
+            <td class="tcell cart__tcell_product">
+                {{> product/image}}
+                {{> product/title}}
+            </td>
+            <td class="cart__tcell_quantity tcell">
+                <input type="number" value="{{quantity}}" data-id="{{id}}" data-csrf="{{@root.csrf}}" class="js-userProductQuantity quantity" min="1">
+            </td>
+            <td class="js-product__price tcell cart__tcell_price">
+                {{> product/price}}
+            </td>
+        </tr>
+        {{/each}}
+
+        {{else}}
+
+            {{#each products}}
+            <tr class="cart-product">
+                <td class="tcell">
+                    <button type="button" class="btn button button_close_small js-remove-guest" data-id="{{id}}" data-csrf="{{@root.csrf}}"></button>
+                </td>
+                <td class="tcell cart__tcell_product">
+                    {{> product/image}}
+                    {{> product/title}}
+                </td>
+                <td class="cart__tcell_quantity tcell">
+                    <input type="number" value="{{quantity}}" data-id="{{id}}" data-csrf="{{@root.csrf}}" class="js-guestProductQuantity quantity" min="1">
+                </td>
+                <td class="js-product__price tcell cart__tcell_price">
+                    {{> product/price}}
+                </td>
+            </tr>
+            {{/each}}
+
+        {{/if}}
+    </tbody>
+
+    {{else}}
+
+    <thead class="thead cart__thead">
+        <tr>
+            <th>Товар</th>
+            <th>Количество</th>
+            <th>Цена</th>
+        </tr>
+    </thead>
+
+     <tbody class="tbody cart__tbody">
+         {{#each products}}
+        <tr class="cart-product">
+            <td class="tcell cart__tcell_product">
+                {{> product/image}}
+                {{> product/title}}
+            </td>
+            <td class="cart__tcell_quantity tcell">{{quantity}}</td>
+            <td class="js-product__price tcell cart__tcell_price">
+                {{> product/price}}
+            </td>
+        </tr>
+        {{/each}}
+    </tbody>
+
+    {{/if}}
+</table>
+
+

@@ -1,417 +1,129 @@
 
-//ИНИЦИАЛИЗАЦИЯ ЭЛЕМЕНТОВ НА СТРАНИЦЕ
+import {toCurrency, toDate, toDesiredFormat} from './modules/utils.js';
+import {initializationElems} from './modules/initialization.js';
 
-M.AutoInit();
+// //localStorage
+// import {setStorage, getStorage} from './modules/localStorage.js';
+// import {createGuestProfile, getGuestProfile} from './modules/guestProfile.js';
 
-// // Табы (на странице авторизации)
-// const $loginPage = document.querySelector('.auth');
-// const $guestOrder = document.querySelector('.guest-order')
-// if($loginPage || $guestOrder) {
-//     M.Tabs.init(document.querySelectorAll('.tabs'), {
-//         swipeable: true
-//     }); 
-// }
+//Cart
+import {toGuestCart, guestAddToCartHandler} from './modules/cart/guestCart.js';
 
-// //Sidenav
-// document.addEventListener('DOMContentLoaded', function() {
-//     let elems = document.querySelectorAll('.sidenav');
-//     let instances = M.Sidenav.init(elems);
-// });
+//Checkout
+import {choiceOfTheWayOfDelivery} from './modules/checkout/choiceOfTheWayOfDelivery.js';
+import {getWarehousesNP} from './modules/checkout/getWarehousesNP.js';
+import {checkoutCollapsibleInit, citiesAutocompleteInput} from './modules/initialization.js';
+import {calculateShippingCost} from './modules/checkout/calculateShippingCost.js';
 
-// document.addEventListener('DOMContentLoaded', function() {
-//     var elems = document.querySelectorAll('.carousel');
-//     var instances = M.Carousel.init(elems, options);
-//   });
-
-
-//ФОРМАТИРОВАНИЕ 
-
-//Чисел в валюту
-function toCurrency(num) {
-    return new Intl.NumberFormat ('ua-UA', {
-        currency: 'uah',
-        style: 'currency'
-    }).format(num)
-}
-
-document.querySelectorAll('.currency').forEach( value => {
-    const price = parseFloat(value.textContent);
-    value.textContent = toCurrency(price)
-})
-
-//Настройка отображения даты
-function toDate(date) {
-    return new Intl.DateTimeFormat('ua-UA', {
-        day: '2-digit',
-        month: 'long',
-        yaer: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
-    }).format(new Date(date))
-}
-
-document.querySelectorAll('.orders__date').forEach( node => {
-    node.textContent = toDate(node.textContent)
-})
-
-//ДОСТУП К ЛОКАЛЬНОМУ ХРАНИЛИЩУ
-
-function setStorage(key, info) {
-    window.localStorage.setItem(key, JSON.stringify(info));
-    return getStorage(key)
-}
-
-function getStorage(key) {
-    let item = window.localStorage.getItem(key);
-    return JSON.parse(item)
-}
-
-//НЕАВТОРИЗИРОВАННЫЕ ПОЛЬЗОВАТЕЛИ
+initializationElems(); //ИНИЦИАЛИЗАЦИЯ ЭЛЕМЕНТОВ НА СТРАНИЦЕ
+toDesiredFormat(); //Преобразование данных в требуемый формат
 
 //--КОРЗИНА--
 
-const $productCardContainer = document.querySelector('.product-cards');
+const cart = document.getElementById('cart');
+     
+if(cart) {
+    const person = cart.dataset.person;
 
-//Вспомогательные функции
-function mergeCarts(products, addProduct) {
-    const inCart = products.find(p => p.id.toString() === addProduct.id.toString() );
-    if(inCart) {
-        inCart.quantity = +inCart.quantity + +addProduct.quantity;
-    } else {
-        products.push(addProduct)
-    }
-    return products
-}
-
-function cartRender(cart, user) {
-    if(cart.products.length) {
-        const html = cart.products.map( p => {
-            return `
-            <tr>
-                <td>${p.name}</td>
-                <td><input type="number" value="${p.quantity}" data-id="${p.id}" data-csrf="${cart.csrf}" class="js-${user}ProductQuantity quantity" min="1"></td>
-                <td class="currency cart-price">${p.price}</td>
-                <td>
-                    <button type="button" data-csrf="${cart.csrf}" class="btn btn-small js-remove-${user} btn-close" data-id="${p.id}"><i class="material-icons">close</i></button>
-                </td>
-            </tr>
-            `
-        }).join('');
-        
-        $cart.querySelector('tbody').innerHTML = html;
-        $cart.querySelector('.product__price').innerHTML = toCurrency(cart.price);
-    } else {
-        $cart.innerHTML = '<p>Товаров в корзине пока нет</p>'
+    if(person === 'user') {
+        loadUserCart()
+    } else if(person === 'guest') {
+        loadGuestCart()
     }
 }
 
-function checkValidity(inputs) {
-    let flag = true;
-    inputs.forEach( input => {
-        if(!input.validity.valid) {
-            input.classList.add('invalid');
-            flag = false;
-        } 
-    })
-    return flag
-}   
+async function loadUserCart() {
 
-async function createGuestProfile(csrf) {
-    return fetch("/cart/create-token/", {
-        method: 'post',
-        headers: {
-            'X-XSRF-TOKEN': csrf,
-            'Content-Type': 'application/json; charset=utf-8'
-        },
-    })
-    .then(res => res.json())
-    .then(profile => setStorage('guestProfile', profile))
+    const {userChangeTotalPrice, userRemoveProductHandler} = await import('./modules/cart/userCart.js');
+    const userChangeQuantity = document.querySelectorAll('.js-userProductQuantity');
+    const userRemoveProduct =  document.querySelectorAll('.js-remove-user');
+    
+    //Изменения количества в корзине для авторизированного пользователя
+    userChangeQuantity.forEach( i => i.addEventListener('change', userChangeTotalPrice))
+
+    //Удаление товара из корзины для авторизированного пользователя
+    userRemoveProduct.forEach( b => b.addEventListener('click', userRemoveProductHandler))
 }
 
-function getGuestProfile(csrf) {
-    return getStorage('guestProfile') ? getStorage('guestProfile') : createGuestProfile(csrf)
-}
-
-//Ссылка на корзину неавторизированного пользователя
-const $guestCartLink = document.querySelector('.js-guestCart'),
-      $linkGuestCart = document.querySelectorAll('.js-toGuestCart');
-
-async function toGuestCart(e) {
-    e.preventDefault();
-    const csrf = e.target.dataset.csrf,
-          guestProfile = await getGuestProfile(csrf),
-          token = guestProfile.data.token;
-
-    window.location.replace(`/cart/${token}`)
-}
-
-if($guestCartLink) {
-    $guestCartLink.addEventListener('click', toGuestCart)
-}
-if($linkGuestCart) {
-    $linkGuestCart.forEach( item => item.addEventListener('click', toGuestCart))
-}
-
-
-//Создание корзины и добавление товаров для неавторизированных пользователей
-async function addToCartHandler(e) {
-    try {
-        if(e.target.classList.contains('js-addToCart')) {
-
-            const id = e.target.dataset.id,
-                  quantity = e.target.nextElementSibling.value,
-                  csrf = e.target.dataset.csrf;
-
-            const guestProfile = await getGuestProfile(csrf);
-
-            //Добавление изменений в корзину + сохранение ее на клиенте
-            const guestProfileAfterChanges = await fetch('/cart/add/' + guestProfile.data.token, {
-                method: 'post',
-                headers: {
-                    'X-XSRF-TOKEN': csrf,
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
-                body: JSON.stringify({
-                    guestProfile,
-                    id,
-                    quantity
-                })
-            })
-            .then(res => res.json())
-            .then(product => {
-                guestProfile.data.products = mergeCarts(guestProfile.data.products, product)
-                setStorage('guestProfile', guestProfile)
-                return guestProfile
-            })
-            
-            //Сохранение корзины локально + редирект на корзину
-            const guestProfileSavedLocally = fetch('/cart/update/' + guestProfile.data.token, {
-                method: 'post',
-                headers: {
-                    'X-XSRF-TOKEN': csrf,
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
-                body: JSON.stringify(guestProfileAfterChanges)
-            })
-            .then(res => window.location.replace(`/cart/${guestProfile.data.token}`))
-        }
-     } catch(err) {
-        console.log(err)
-    }
-}
-
-if($productCardContainer) {
-    $productCardContainer.addEventListener('click', addToCartHandler)
-} 
-
-//Динамическая перерисовка корзины
-const $cart = document.getElementById('cart'),
-      $guestQuantity = document.querySelectorAll('.js-guestProductQuantity'),
-      $userQuantity = document.querySelectorAll('.js-userProductQuantity');
-
-if($cart) {
+async function loadGuestCart() {
+    const {toGuestCart, guestChangeTotalPrice, guestAddToCartHandler, guestRemoveProductHandler} = await import('./modules/cart/guestCart.js');
+    const guestChangeQuantity = document.querySelectorAll('.js-guestProductQuantity');
+    const guestRemoveProduct = document.querySelectorAll('.js-remove-guest');
 
     //Изменения количества в корзине для неавторизированного пользователя
-    $guestQuantity.forEach( q => q.addEventListener('input', guestChangeTotalPrice))
+    guestChangeQuantity.forEach( i => i.addEventListener('change', guestChangeTotalPrice))
 
-    function guestChangeTotalPrice(e) {
-        const guestProfile = getStorage('guestProfile');
-        const products = [...document.querySelectorAll('.cart-product')];
-        const csrf = e.target.dataset.csrf;
+    //Удаление товара из корзины для неавторизированного пользователя
+    guestRemoveProduct.forEach( b => b.addEventListener('click', guestRemoveProductHandler))
 
-        //Обновление localStorage
-        const id = e.target.dataset.id;
-        const product = guestProfile.data.products.find( p => p.id.toString() === id.toString());
-        product.quantity = +e.target.value;
-        setStorage('guestProfile', guestProfile)
+}
 
-        //Обновление данных локально
-        fetch('/cart/update/' + guestProfile.data.token, {
-            method: 'post',
-            headers: {
-                'X-XSRF-TOKEN': csrf,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(guestProfile)
-        }).then(res => console.log(res.status))
-        
-        const totalPrice = products.reduce( (total, product) => {
-            const priceElem = product.querySelector('.cart-price');
-            const price = parseFloat(priceElem.innerHTML);
-            const quantity = product.querySelector('.js-guestProductQuantity').value;
+//Добавление товара в корзину для неавторизированного пользователя
+const productCardContainer = document.querySelector('.product-cards');
+if(productCardContainer) {
+    productCardContainer.addEventListener('click', guestAddToCartHandler)
+} 
 
-            return total += +price * +quantity
-        }, 0)
-
-        $cart.querySelector('.product__price').innerHTML = toCurrency(totalPrice);
-    }
-
-    //Изменения количества в корзине для авторизированного пользователя
-    $userQuantity.forEach( q => q.addEventListener('input', userChangeTotalPrice))
-    function userChangeTotalPrice(e) {
-        const quantity = +e.target.value,
-              productId = e.target.dataset.id,
-              csrf = e.target.dataset.csrf;
-
-        fetch('/cart/update', {
-            method: 'post',
-            headers: {
-                'X-XSRF-TOKEN': csrf,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify({
-                productId, quantity
-            })
-        })
-        .then( res => window.location.replace('/cart'))
-    }
-
-    //Удаление товаров
-    $cart.addEventListener('click', async (e) => {
-        const id = e.target.dataset.id,
-              csrf = e.target.dataset.csrf;
-
-        if(e.target.classList.contains('js-remove-user')) {
-            fetch('/cart/remove/' + id, {
-                method: 'delete',
-                headers: {
-                    'X-XSRF-TOKEN': csrf,
-                }
-            })
-            .then(res => res.json())
-            .then(cart => cartRender(cart, 'user'))
-
-        } else if(e.target.classList.contains('js-remove-guest')) {
-
-            const guestProfile = await getGuestProfile(csrf);
-            guestProfile.data.products = guestProfile.data.products.filter( p => p.id.toString() !== id.toString() )
-            setStorage('guestProfile', guestProfile)
-
-            fetch(`/cart/remove/${guestProfile.data.token}/${id}`, {
-                method: 'post',
-                headers: {
-                    'X-XSRF-TOKEN': csrf,
-                    'Content-Type': 'application/json; charset=utf-8'
-                },
-                body: JSON.stringify(guestProfile)
-            })
-            .then(res => res.json())
-            .then(cart => cartRender(cart, 'guest'))
-        }
-    })
+//Ссылка на корзину неавторизированного пользователя
+const  linkGuestCart = document.querySelectorAll('.js-toGuestCart');
+if(linkGuestCart) {
+    linkGuestCart.forEach( item => item.addEventListener('click', toGuestCart))
 }
 
 //--ОФОРМЛЕНИЕ ЗАКАЗА--
 
-const $guestCheckoutLink = document.querySelector('.js-order-guest'),
-      $guestOrder = document.querySelector('.guest-order'),
-      $checkout = document.querySelector('.checkout'),
-      $ordersNavButton = document.querySelectorAll('.orders-nav'),
-      $deliveryOptions = document.querySelectorAll('.delivery-option'),
-      $npDepartment = document.getElementById('npDepartment'),
-      $npAddress = document.getElementById('npAddress'),
-      $ukrposhta = document.getElementById('ukrposhta');
+const checkout = document.getElementById('checkout');
 
-const formContent = {
-    npDepartment: ['locality', 'department'],
-    npAddress: ['locality', 'street', 'apartment'],
-    ukrposhta: ['locality', 'postal-code'],
-}
+if(checkout) {
 
-//Рендер требуемых полей для доставки
-function createForm(e) {
-    const target = e.target,
-          id = target.id,
-          inputsId = formContent[id],
-          container = document.querySelector('.form-fragment'),
-          newContainer = document.createElement('div');
+    //Инициализация акардеона для заполнения формы
+    const checkoutCollapsibleInstance = checkoutCollapsibleInit();
 
-    newContainer.classList.add('form-fragment');
+    //Валидация первой части формы с контактными данными 
+    const checkoutContactValidationBtn = checkout.querySelector('.js-contactValidation');
+    checkoutContactValidationBtn.addEventListener('click', () => {
+        const id = ['name', 'surname', 'phone', 'email'];
+       
+        let flag = true;
+        
+        // Валидация полей
+        const contactInputs = id.map( (id) => document.getElementById(`${id}`));
+        contactInputs.forEach( input => {
+            if(!input.validity.valid) {
+                input.classList.add('invalid');
+                flag = false
+            } 
+        })
+        if(flag){
+            //Открытие второй части формы с информацией о доставке
+            controlCollapsible();
 
-    inputsId.forEach( inputId => {
-        const elem = document.getElementById(inputId).cloneNode(true);
-        elem.querySelector('input').required = true;
-        elem.id = undefined;
-        newContainer.append(elem)
-    })
-    container.replaceWith(newContainer)
-}
+            //Выбор способа доставки
+            choiceOfTheWayOfDelivery();
 
-//Навигация по fieldset
-function ordersNavHandler(e) {
-    const target = e.target;
-    const orderFieldsets = Array.from(document.querySelectorAll('.order-fieldset'));
-    const direction = target.classList.contains('next') ? 'next' : 'prev';
-    const fieldset = target.closest('.order-fieldset');
-    const inputs = fieldset.querySelectorAll('input');
-    const index = orderFieldsets.findIndex( item => item.id === fieldset.id);
+            //Загрузка списка городов новой почты
+            citiesAutocompleteInput();
 
-    if(direction === 'next') {
-
-        //Валидация заполненых полей перед переходом на следующий fieldset 
-        if(checkValidity(inputs)){
-            const nextFieldset = orderFieldsets[index+1];
-            orderFieldsets.forEach( (item) => {
-                item.classList.remove('active')
-            })
-            nextFieldset.classList.add('active')
+            //Изменение формы оплаты товара
+            changePaymentHandler()
         }
-    } else if(direction === 'prev'){
-        const prevFieldset = orderFieldsets[index-1];
-        orderFieldsets.forEach( (item) => {
-            item.classList.remove('active')
-        })
-        prevFieldset.classList.add('active')
-    }
-}
 
-const orderSubmit = document.querySelector('.js-orderSubmit');
+        async function controlCollapsible() {
+            const {renderShippingForm} = await import('./modules/checkout/renderShippingForm.js');
+            const shippingBlock = checkout.querySelector('.shipping__wrapper');
 
-if($guestOrder) {
+            // Смена видимого блока
+            shippingBlock.style.display = 'block';
+            checkoutCollapsibleInstance.open(1);
+            checkoutCollapsibleInstance.close(0);
+            renderShippingForm()
+        }
 
-    // Обработчик для кнопки заказа
-    orderSubmit.addEventListener('click', (e) => {
-        const fieldset = e.target.closest('.order-fieldset');
-        const inputs = fieldset.querySelectorAll('input');
-    })
+        function changePaymentHandler() {
+            const checkoutForm = document.forms.checkout;
+            const paymentContainer = checkoutForm.elements.payment;
 
-    //Навигация по fieldsets в форме для оформления заказа
-    $ordersNavButton.forEach( button => button.addEventListener('click', ordersNavHandler) )
-
-  
-}
-
-if($checkout) {
-       //Выбор способа доставки    
-       $npDepartment.addEventListener('change', createForm);
-       $npAddress.addEventListener('change', createForm);
-       $ukrposhta.addEventListener('change', createForm);
-}
-
-//Переход на страницу оформления заказа
-
-if($guestCheckoutLink) {
-    $guestCheckoutLink.addEventListener('click', (e) => {
-        e.preventDefault();
-
-        const csrf = e.target.dataset.csrf;
-        const guestProfile = getGuestProfile(csrf);
-        const token = guestProfile.data.token;
-
-        fetch('/orders/' + token, {
-            method: 'post',
-            headers: {
-                'X-XSRF-TOKEN': csrf,
-                'Content-Type': 'application/json; charset=utf-8'
-            },
-            body: JSON.stringify(guestProfile)
-        })
-        .then( res => window.location.replace(`/orders/${token}`))
+            paymentContainer.addEventListener('change', calculateShippingCost)
+        }
     })
 }
-
-
-
-
-

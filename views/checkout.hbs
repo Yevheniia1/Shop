@@ -1,0 +1,65 @@
+<div class="checkout" id="checkout">
+    <h1 class="title_medium center">Информация о доставке</h1>
+  
+    {{#if error}}
+        <p class="alert">{{error}}</p>
+    {{/if}}
+
+    <div class="row">
+
+        <div class="col l6 m12">
+
+            {{#if isAuth}}
+            <form class="checkout__form" name="checkout" action="/checkout/user" method="POST">
+            {{else}}
+            <form class="checkout__form" name="checkout" action="/checkout/guest{{token}}" method="POST">
+            {{/if}}
+
+                <ul class="collapsible expandable checkout__collapsible">
+                    <li class="active contact__wrapper">
+                        <div class="collapsible-header"><i class="material-icons">account_circle</i>Контактные данные получателя</div>
+                        <div class="collapsible-body">
+                            
+                            {{> checkout/form/contact}}
+
+                        </div>
+                    </li>
+                    <li class="shipping__wrapper">
+                        <div class="collapsible-header"><i class="material-icons">place</i>Адрес доставки</div>
+                        <div class="collapsible-body">    
+                            
+                            {{> checkout/form/address}}
+
+                            {{> checkout/form/payment}}
+
+                        </div>
+                    </li>
+                </ul>
+                <input type="hidden" name="_csrf" id="csrf" value="{{@root.csrf}}">
+                <button type="submit" class="btn button button_accent">Заказать</button>
+            </form>
+        </div>
+        <div class="col l6 m12">
+                <h2 class="title_small">Ваш заказ</h2>
+                <a class="col l6"><a href="/products" class="link link_accent">Продолжить покупки</a>
+
+            {{> cart-table}}
+
+            <p class="cart__total_wrapper">Доставка: <strong class="js-checkout__deliveryCost currency">0</strong></p>
+            <p class="cart__total_wrapper visually-hidden">Общая стоимость товаров: <strong class="js-checkout__cart-total">{{price}}</strong></p>
+            <p class="cart__total_wrapper">Сумма к оплате: <strong class="js-checkout__total cart__total currency">{{price}}</strong></p>
+
+
+            {{#if isAuth}}
+            <a href="/cart" class="link">Изменить заказ</a>
+            {{else}}
+             <a href="/cart/{{token}}" class="link link_accent">Изменить заказ</a>
+            {{/if}}
+        </div>
+       
+    </div>
+
+    {{!-- Хранение полей ввода для рендера формы --}}
+    {{> input/shipping-inputs}}
+
+</div>

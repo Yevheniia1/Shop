@@ -1,0 +1,43 @@
+.product {
+    &__title {
+        @extend .black-text;
+        font-family: $font-primary;
+        font-size: 1.5rem;
+        margin: 1.5rem 0 1rem;
+        font-weight: 400;
+
+        @media #{$medium-and-down} {
+            font-size: 1.2rem;
+        }
+
+        @media #{$small-and-down} {
+            font-size: .9rem;
+        }
+    }
+
+    &__price {
+        font-family: $font-accent;
+        font-size: 1.2rem;
+        text-align: center;
+        padding: .5rem 1rem;
+        margin-bottom: .8rem;
+        text-transform: uppercase;
+
+        @media #{$medium-and-down} {
+            font-size: 1.2rem;
+            padding: 0;
+            margin-bottom: .5rem;
+        }
+
+        @media #{$small-and-down} {
+            font-size: .9rem;
+        }
+    }
+    
+    &__image {
+        object-fit: contain;
+        display: block;
+        width: 100%;
+        min-width: 80px;
+    }
+}

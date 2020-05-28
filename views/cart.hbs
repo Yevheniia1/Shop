@@ -1,62 +1,36 @@
-<h1 class="page-title">Корзина</h1>
-<p class="page-desc">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores amet voluptatibus, quasi ipsa maxime sint!</p>
-<div id="cart">
+<h1 class="title_medium center">Ваша корзина</h1>
+<p class="description">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolores amet voluptatibus, quasi ipsa maxime sint!</p>
+
+{{#if @root.isAuth}}
+
+<div id="cart" class="cart" data-person="user">
+
+{{else}}
+
+<div id="cart" class="cart" data-person="guest">
+
+{{/if}}
+
     {{#if products.length}}
-        <table class="highlight product-table">
-            <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Ед.</th>
-                    <th>Цена</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
+    
+    {{> cart-table}}
 
-                {{#if @root.isAuth}}
+    <p class="cart__total_wrapper">Сумма к оплате: <strong class="js-cart__total cart__total currency">{{price}}</strong></p>
+    
+    {{#if @root.isAuth}}
 
-                {{#each products}}
-                        <tr class="cart-product">
-                            <td>{{name}}</td>
-                            <td><input type="number" value="{{quantity}}" data-id="{{id}}" data-csrf="{{@root.csrf}}" class="js-userProductQuantity quantity" min="1"></td>
-                            <td class="currency cart-price">{{price}}</td>
-                            <td>
-                                <button type="button" class="btn btn-small btn-close js-remove-user" data-id="{{id}}" data-csrf="{{@root.csrf}}"><i class="material-icons">close</i></button>
-                            </td>
-                        </tr>
-                    {{/each}}
-
-                {{else}}
-
-                    {{#each products}}
-                        <tr class="cart-product">
-                            <td>{{name}}</td>
-                            <td><input type="number" value="{{quantity}}" data-id="{{id}}" data-csrf="{{@root.csrf}}" class="js-guestProductQuantity quantity" min="1"></td>
-                            <td class="currency cart-price">{{price}}</td>
-                            <td>
-                                <button type="button" class="btn btn-small js-remove-guest btn-close" data-id="{{id}}" data-csrf="{{@root.csrf}}"><i class="material-icons">close</i></button>
-                            </td>
-                        </tr>
-                    {{/each}}
-
-                {{/if}}
-            </tbody>
-        </table>
-        <p>Сумма к оплате: <strong class="product__price currency">{{price}}</strong></p>
-   
-        {{#if @root.isAuth}}
-
-        <a href="/orders/user" class="btn">Оформить заказ</a>
-        
-        {{else}}
-        <button type="button" data-csrf="{{@root.csrf}}" class="btn js-order-guest btn-small">Оформить заказ без регистрации</button>
-        {{> auth-link}}
-
-            
-        {{/if}}
+    <a href="/checkout" class="btn button button_accent">Оформить заказ</a>
 
     {{else}}
-        <p>Товаров в корзине пока нет</p>
-    {{/if}}
+    <a href="/checkout/{{token}}" class="btn button_accent cart__button">Оформить заказ без регистрации</a>
 
+    {{> link/auth-link}}
+
+        
+    {{/if}}
+    
+    {{else}}
+        <p>Товаров в корзине пока нет</p>
+        <a href="/products" class="link link_accent">Вернуться к покупкам</a>
+    {{/if}}
 </div>

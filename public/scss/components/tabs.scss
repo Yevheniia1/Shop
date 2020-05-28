@@ -1,0 +1,19 @@
+.tabs{
+    &__wrapper {
+        margin-bottom: 1em;
+    }
+
+    .indicator {
+        @extend .black;
+    }
+} 
+
+.tab__link {
+    @extend .black-text;
+    font-weight: 500;
+    background-color: transparent;
+
+    &:focus.active {
+        background-color: transparent!important;
+    }
+}

@@ -1,0 +1,30 @@
+<fieldset class="checkout__fieldset active" id="contact">
+    <legend class="visually-hidden">Контактные данные получателя</legend>
+    <div class="row">
+
+     
+        <div class="input-field input__wrapper">
+            <input id="email" name="email" type="email" class="validate" value="{{user.email}}" required autocomplete="email">
+            <label for="email">Email</label>
+            <span class="helper-text" data-error="Введите email"></span>
+        </div>
+        <div class="input-field l6 offset-m3">
+            <input id="surname" name="surname" type="text" class="validate" required value="{{user.surname}}">
+            <label for="surname">Ваша фамилия</label>
+            <span class="helper-text" data-error="Введите фамилию"></span>
+        </div>
+        <div class="input-field l6 offset-m3">
+            <input id="name" name="name" type="text" class="validate" required value="{{user.name}}">
+            <label for="name">Ваше имя</label>
+            <span class="helper-text" data-error="Введите имя"></span>
+        </div>
+        <div class="input-field l6 offset-m3">
+            <input id="phone" name="phone" type="tel" class="validate" placeholder="+38099 000-00-00" value="{{user.phone}}" required>
+            <label for="phone">Ваш номер телефона</label>
+            <span class="helper-text" data-error="Введите номер телефона"></span>
+        </div>
+        
+        {{!-- <input type="hidden" id="csrf" name="_csrf" value="{{@root.csrf}}"> --}}
+        <button type="button" class="btn button button_accent js-contactValidation">Далее</button>
+    </div>
+</fieldset>

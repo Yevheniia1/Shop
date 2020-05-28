@@ -1,0 +1,10 @@
+.message {
+
+    &_alert {
+        padding: .5em;
+        color: rgb(255, 0, 0);
+        border-bottom: 1px solid rgb(255, 0, 0);
+        background-color: rgba(255, 0, 0, .1);
+        animation: opacity .5s ease;
+    }
+}

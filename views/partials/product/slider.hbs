@@ -1,0 +1,13 @@
+<div class="glide">
+  <div class="glide__track" data-glide-el="track">
+    <ul class="glide__slides">
+      {{#each img}}
+      <li class="glide__slide"><img src="../images/{{this}}" width="100%" alt="{{name}}"></li>
+      {{/each}}
+    </ul>
+  </div>
+   <div class="glide__arrows" data-glide-el="controls">
+    <button class="glide__arrow glide__arrow--left" data-glide-dir="<">prev</button>
+    <button class="glide__arrow glide__arrow--right" data-glide-dir=">">next</button>
+  </div>
+</div>

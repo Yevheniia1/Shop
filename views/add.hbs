@@ -18,10 +18,19 @@
         <span class="helper-text" data-error="Введите цену"></span>
     </div>
 
+    {{> product/product-categories}}
+
+    <div class="input-field">
+        <textarea id="description" name="description" class="materialize-textarea" value="{{data.description}}" required></textarea>
+        <label for="description">Описание товара</label>
+        <span class="helper-text" data-error="Введите описание"></span>
+    </div>
+
     <div class="file-field input-field">
       <div class="btn">
         <span>Изображение</span>
-        <input type="file" id="img" name="img">
+        <input type="file" id="img" name="img" required multiple>
+        <span class="helper-text" data-error="Загрузка до 10 изображений"></span>
       </div>
       <div class="file-path-wrapper">
         <input class="file-path validate" type="text">

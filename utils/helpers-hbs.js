@@ -7,10 +7,17 @@ module.exports = {
         }
         return options.inverse(this)
     },
+
     ifAdmin(a, options) {
-        if(keys.ADMIN_ID.indexOf(a.toString()) >= 0) {
+        if(a !== null && keys.ADMIN_ID.includes(a.toString())) {
             return options.fn(this);
         }
+
         return options.inverse(this)
-    }
+    },
+
+    cover(imgs, name, option) {
+        return `<img src="/images/${imgs[0]}" alt="${name}" class="materialboxed product__image"></img>`
+        
+    },
 }

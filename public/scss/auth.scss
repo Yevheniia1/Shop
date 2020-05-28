@@ -1,0 +1,18 @@
+
+.auth {
+    max-width: 500px;
+    width: 65%;
+    margin: 0 auto;
+
+    @media #{$medium-and-down} {
+        width: 100%;
+    }
+
+    &__button {
+        padding: 0 5em;
+    
+        @media #{$small-and-down} {
+            width: 100%;
+        }
+    }
+}

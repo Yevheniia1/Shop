@@ -1,0 +1,43 @@
+  // USER ACCOUNT 
+        
+  .user-account__wrapper {
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    @extend .black;
+
+    .user-account {
+        &__background {
+            width: 100%;
+            object-fit: cover;
+        }
+    }
+
+    .user-account__trigger {
+        display: flex!important;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+        padding: 0 2em;
+        font-family: 'Comfortaa', cursive;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        @extend .black;
+        @extend .white-text;
+        font-size: .7rem;
+
+        @media #{$medium-and-down} {
+            font-size: .7rem;
+            color: #eeeeee!important; //.grey-text, .text-lighten-2;
+        }
+        i {
+            vertical-align: middle;
+            font-size: 1.2rem;
+
+            @media #{$medium-and-down} {
+                font-size: 1.2rem;
+            }
+        }
+    }
+}

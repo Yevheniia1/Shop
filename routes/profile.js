@@ -9,7 +9,7 @@ router.get('/', auth, (req, res) => {
     return res.render('profile', {
         title: 'Личный кабинет',
         isProfile: true,
-        user: req.user.toObject(),
+        user: req.user ? req.user.toObject() : null,
         error: req.flash('error')
     })
 })

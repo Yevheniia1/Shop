@@ -16,8 +16,24 @@ router.get('/', async (req, res) => {
         const productsList = await Products.find();
         res.render('products', {
             title: 'Товары',
+            mainTitle: `Маски`,
             isProducts: true,
-            userId: req.user ? req.user._id.toString() : null,
+            user: req.user ? req.user.toObject() : null,
+            productsList,
+        })
+    } catch(err) {
+        console.log(err)
+    }
+})
+
+router.get('/category/:category', async (req, res) => {
+    try {
+        const productsList = await Products.find( {category: req.params.category} );
+        res.render('products', {
+            mainTitle: `${req.params.category}`,
+            title: `Маски`,
+            isProducts: true,
+            user: req.user ? req.user.toObject() : null,
             productsList,
         })
     } catch(err) {
@@ -40,6 +56,7 @@ router.get('/:id/edit', auth, async (req, res) => {
         res.render('product-edit', {
             title: `Редактировать ${product.title}`,
             error: req.flash('error'),
+            user: req.user ? req.user.toObject() : null,
             product
         })
     } catch(err) {
@@ -76,7 +93,6 @@ router.post('/edit', auth, productValidation,  async (req, res) => {
 
             Object.assign(product, toChange)
             await product.save()
-            console.log(product)
         }
 
         res.redirect('/products')
@@ -101,8 +117,11 @@ router.get('/:id', async (req, res) => {
         const product = await Products.findById(req.params.id);
         res.render('product', {
             section: 'products',
-            title: `Товар ${product.title}`,
+            title: `Товар ${product.name}`,
+            user: req.user ? req.user.toObject() : null,
             img: product.img,
+            description: product.description,
+            category: product.category,
             name: product.name,
             price: product.price,
             id: product.id,
@@ -113,5 +132,6 @@ router.get('/:id', async (req, res) => {
         console.log(err)
     }
 })
+
 
 module.exports = router

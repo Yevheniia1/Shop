@@ -9,10 +9,18 @@ const productSchema = new Schema({
         type: Number,
         required: true
     },
-    img: String,
+    img: Array,
     userId: {
         type: Schema.Types.ObjectId,
         ref: 'User'
+    },
+    category:  {
+        type: Array,
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
     }
 })
 

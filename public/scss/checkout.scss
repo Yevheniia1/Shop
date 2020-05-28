@@ -1,0 +1,55 @@
+.checkout{
+
+    .shipping__wrapper {
+        display: none;
+    }
+
+    form {
+
+        fieldset {
+            border: none;
+            padding: 0 .75rem;
+            margin: 0 0 1rem 0;
+        }
+    
+
+    }
+} 
+
+.checkout {
+    .shipping-option{
+        display: flex;
+        margin-bottom: 1rem;
+
+        span {
+            width: 80%;
+        }
+
+        [type="radio"]:not(:checked) + span, [type="radio"]:checked + span {
+            height: auto;
+        }
+
+        &.np-department:before, &.np-address:before {
+            background-image: url('../images/np.png');
+        }
+
+        &.ukrposhta:before {
+            background-image: url('../images/ukrposhta.png');
+        }
+
+        &:before {
+            content:"";
+            display: inline-block;
+            width: 20%;
+            height: 25px;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+    }
+
+    @include showInputs("np-address", "locality", "street", "apartment");
+    @include showInputs("np-department", "locality", "department");
+    @include showInputs("ukrposhta", "locality", "postal-code");
+
+}

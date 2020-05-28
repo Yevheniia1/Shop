@@ -1,0 +1,93 @@
+{{!-- MAIN NAVIGATION --}}
+
+<nav class="navigation">
+    
+    <div class="nav-wrapper navigation__wrapper">
+
+        {{!-- LOGO --}}
+
+        <a href="/" class="brand-logo logo navigation__logo">
+            <img class="logo__img navigation__logo__img" src="../../images/logo.png" width="50px" alt="404.ua Магазин масок">
+        </a>
+
+        {{!-- NAVBAR --}}
+
+        <ul class="navigation__list ">
+        {{#if isHome}}
+            <li class="active">
+                <a class="link navigation__link" href="/">
+                    <i class="material-icons navigation__link__icon">home</i>
+                    <span class="navigation__link__text">Главная</span>
+                </a>
+            </li>
+        {{else}}
+            <li>
+                <a class="link navigation__link" href="/">
+                    <i class="material-icons navigation__link__icon">home</i>
+                    <span class="navigation__link__text">Главная</span>
+                </a>
+            </li>
+        {{/if}}
+
+        {{#if isProducts}}
+            <li class="active">
+                <a class="link navigation__link" href="/products">
+                    <i class="material-icons navigation__link__icon">apps</i>
+                    <span class="navigation__link__text">Маски</span>
+                </a>
+            </li>
+        {{else}}
+            <li>
+                <a class="link navigation__link" href="/products">
+                    <i class="material-icons navigation__link__icon">apps</i>
+                    <span class="navigation__link__text">Маски</span>
+                </a>
+            </li>
+        {{/if}}
+
+        {{#if isAuth}}
+
+        {{else}}
+
+            {{#if isCart}}
+                <li class="active">
+                    <a href="/cart" data-csrf="{{@root.csrf}}" class="js-toGuestCart link navigation__link">
+                        <i class="material-icons navigation__link__icon">shopping_basket</i>
+                        <span class="navigation__link__text">Корзина</span>
+                    </a>
+                </li>
+            {{else}}
+                <li>
+                    <a href="/cart" data-csrf="{{@root.csrf}}" class="js-toGuestCart link navigation__link">
+                        <i class="material-icons navigation__link__icon">shopping_basket</i>
+                        <span class="navigation__link__text">Корзина</span>
+                    </a>
+                </li>
+            {{/if}}
+
+            {{#if isLogin}}
+                <li class="active menu-item-right">
+                    <a href="/auth/login#login" class="link navigation__link navigation__link_accent">
+                        <i class="material-icons navigation__link__icon">person</i>
+                        <span class="navigation__link__text">Войти</span>
+                    </a>
+                </li class="active">
+            {{else}}
+                <li class="menu-item-right">
+                    <a href="/auth/login#login" class="link navigation__link navigation__link_accent">
+                        <i class="material-icons navigation__link__icon">person</i>
+                        <span class="navigation__link__text">Войти</span>
+                    </a>
+                </li>
+            {{/if}}
+
+        {{/if}}
+
+        </ul>
+
+        {{!-- USER ACCOUNT --}}
+
+        {{> navigation/user-account}}
+
+    </div>
+</nav>

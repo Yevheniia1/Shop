@@ -15,6 +15,7 @@ router.get('/login', async (req, res) => {
     res.render('auth/login', {
         title: 'Авторизация',
         isLogin: true,
+        user: req.user ? req.user.toObject() : null,
         loginError: req.flash('loginError'),
         registerError: req.flash('registerError'),
     })
@@ -65,6 +66,7 @@ router.post('/register', registerValidators, async (req, res) => {
 router.get('/reset', (req, res) => {
     res.render('auth/reset', {
         title: "Сбросить пароль",
+        user: req.user ? req.user.toObject() : null,
         error: req.flash('error')
     })
 })
@@ -114,6 +116,7 @@ router.get('/password/:token', async (req, res) => {
                 title: "Восстановить пароль",
                 error: req.flash('error'),
                 token: req.params.token,
+                user: req.user ? req.user.toObject() : null,
                 userId: user._id.toString()
             })
         }

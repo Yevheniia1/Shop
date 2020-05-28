@@ -1,0 +1,39 @@
+
+
+.link-cart {
+    display: block;
+    padding: 1rem 0;
+}
+
+.orders-nav {
+    @extend .amber, .darken-1;
+
+    i {
+        vertical-align: top;
+        font-size: 1rem;
+    }
+}
+
+
+.order-confirmed {
+   .content {
+       text-align: center;
+   }
+
+   .confirmed-title {
+    font-size: 2rem;
+   }
+
+    .icon {
+        @include size(5rem, 5rem);
+        @extend .green, .accent-3;
+        border-radius: 50%;
+        position: relative;
+        margin: 2rem auto;
+
+        i {
+            color: #ffffff;
+            @extend %center;
+        }
+    }
+}

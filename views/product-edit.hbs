@@ -8,7 +8,7 @@
     <input type="hidden" name="id" value="{{product.id}}"></input>
 
     <div class="input-field">
-        <input id="title" name="title" type="text" class="validate" value="{{product.title}}" required>
+        <input id="title" name="title" type="text" class="validate" value="{{product.name}}" required>
         <label for="title">Название товара</label>
         <span class="helper-text" data-error="Введите название"></span>
     </div>
@@ -19,10 +19,26 @@
         <span class="helper-text" data-error="Введите цену"></span>
     </div>
 
+    <div class="input-field">
+      <select required name="category" multiple>
+          <option value="{{product.category}}" selected>{{product.category}}</option>
+          <option value="anime">anime</option>
+          <option value="animal">animal</option>
+      </select>
+      <label>Категория</label>
+    </div>
+
+    <div class="input-field">
+        <textarea id="description" name="description" class="materialize-textarea" required>{{product.description}}</textarea>
+        <label for="description">Описание товара</label>
+        <span class="helper-text" data-error="Введите описание"></span>
+    </div>
+
+
     <div class="file-field input-field">
       <div class="btn">
         <span>Изображение</span>
-        <input type="file" id="img" name="img">
+        <input type="file" id="img" name="img" multiple>
       </div>
       <div class="file-path-wrapper">
         <input class="file-path validate" type="text" value="{{product.img}}">

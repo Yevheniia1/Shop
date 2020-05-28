@@ -1,0 +1,41 @@
+.button {
+
+    @extend .waves-effect, .waves-light;
+
+    &_accent {
+        background-color: $color-accent;
+    }
+
+    &_close {
+        background-color: transparent;
+        border: none;
+        box-shadow: unset;
+        position: relative;
+
+        &:hover, &:active, &:focus {
+            box-shadow: unset;
+            background-color: transparent;
+        }
+
+        &:before, &:after{
+            content: '';
+            @include size(2px, 100%);
+            @extend .grey;
+            @extend %center;
+        }
+
+        &:before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+
+        &:after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    }
+
+    &_close_small {
+        @extend .button_close;
+        @include size(1rem, 1rem);
+    }
+
+}

@@ -6,7 +6,7 @@ const User = require('../models/user');
 const uuid = require('uuid');
 const bcrypt = require('bcryptjs');
 const LocalStorage = require('node-localstorage').LocalStorage;
-const localStorage = new LocalStorage('./scratch');
+const localStorage = new LocalStorage('./guestCart');
 
 router.post('/create-token', async (req, res) => {
     try {
@@ -46,6 +46,7 @@ router.get('/', auth, async (req, res) => {
         title: 'Корзина',
         isCart: true,
         products: products,
+        user: req.user ? req.user.toObject() : null,
         price: computePrice(products)
     })
 })
@@ -110,6 +111,8 @@ router.get('/:token', (req, res) => {
         res.render('cart', {
             title: 'Корзина',
             isCart: true,
+            token: req.params.token,
+            user: req.user ? req.user.toObject() : null,
             products,
             price: computePrice(products)
         })
@@ -126,6 +129,7 @@ router.post('/add/:token', async (req, res) => {
         const cart = {
             name: product.name,
             price: product.price,
+            img: product.img,
             id,
             quantity: +quantity
         }
@@ -154,7 +158,7 @@ router.post('/update/:token', (req, res) => {
     const token = guestProfile.data.token;
 
     localStorage.setItem(token, value)
-    res.status(200).send('File update')
+    res.status(200).json(guestProfile)
 })
 
 module.exports = router

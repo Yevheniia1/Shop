@@ -1,0 +1,8 @@
+.input {
+
+    &__wrapper {
+        @media #{$medium-and-down} {
+            margin: .5rem 0;
+        }
+    }
+}

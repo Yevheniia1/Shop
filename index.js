@@ -12,8 +12,7 @@ const express = require('express'),
       sgMail = require('@sendgrid/mail'),
       hbsHelpers = require('./utils/helpers-hbs'),
       errorHandler = require('./middleware/error'),
-      LocalStorage = require('node-localstorage').LocalStorage,
-      localStorage = new LocalStorage('./scratch');
+      webpack = require('webpack');
 
 
 //Маршрутизаторы
@@ -21,18 +20,23 @@ const homeRouter = require('./routes/home'),
       addRouter = require('./routes/add'),
       productsRouter = require('./routes/products'),
       cartRouter = require('./routes/cart'),
-      User = require('./models/user'),
       ordersRouter = require('./routes/orders'),
+      checkoutRouter = require('./routes/checkout'),
       authRouter = require('./routes/auth'),
       profileRouter = require('./routes/profile');
+    //   novaPoshtaRouter = require('./nova-poshta');
 
 //Middleware
 const varMiddleware = require('./middleware/variables'),
       userMiddlewear = require('./middleware/user'),
-      fileMiddlewear = require('./middleware/file');
+      fileMiddlewear = require('./middleware/file'),
+      webpackDevMiddleware = require('webpack-dev-middleware');
 
 //Создание приложения
 const app = express();
+
+const config = require('./webpack-front.config.js');
+const compiler = webpack(config);
 
 //Загрузка статических каталогов
 app.use(express.static(path.join(__dirname, 'public')));
@@ -52,7 +56,7 @@ app.use(session({
     saveUninitialized: false,
     store
 }))
-app.use(fileMiddlewear.single('img'))
+app.use(fileMiddlewear.array('img', 10))
 app.use(csrf())
 app.use(flash())
 app.use(helmet())
@@ -60,6 +64,9 @@ app.use(compression())
 app.use(varMiddleware)
 app.use(userMiddlewear)
 
+app.use(webpackDevMiddleware(compiler, {
+    publicPath: config.output.publicPath,
+  }));
 
 
 //Подключение и регистрация handlebars
@@ -82,6 +89,8 @@ app.use('/add', addRouter)
 app.use('/orders', ordersRouter)
 app.use('/auth', authRouter)
 app.use('/profile', profileRouter)
+app.use('/checkout', checkoutRouter)
+// app.use('/novaPoshta', novaPoshtaRouter)
 
 app.use(errorHandler)
 
@@ -109,7 +118,33 @@ async function start() {
         console.log(e);
     }
 }
+
+
+// Загрузка списка контрагентов
+// const fetch = require('node-fetch');
+
+// fetch('https://api.novaposhta.ua/v2.0/json/', {
+//     method: 'POST',
+//     headers: {
+//         'Content-Type': 'application/json',
+//     },
+//     body: JSON.stringify({
+//         "apiKey": "c85d313cb51f8ed29a4b699cceacb153",
+//          "modelName": "Counterparty",
+//          "calledMethod": "getCounterparties",
+//          "methodProperties": {
+//          "CounterpartyProperty": "Recipient",
+//          }
+//         }
+//         )
+// })
+// .then(res => res.json())
+// .then(res => console.log(res))
+  
+
 start();
+
+
 
 
 

@@ -1,0 +1,33 @@
+ <div class="visually-hidden">
+        <div class="input-field" data-shipping="locality" >
+            <input autocomplete type="text" name="locality" class="validate js-required" min="2">
+            <label for="locality">Населенный пункт</label>
+            <span class="helper-text" data-error="Введите наcеленный пункт"></span>
+        </div>
+        <div class="col s12" data-shipping="department" name="department" autocomplete>
+            <label>Номер отделения</label>
+            <select class="js-npWarehouses browser-default js-required" name="department"> 
+                
+            </select>
+        </div>
+        {{!-- <div class="input-field" data-shipping="department">
+            <input autocomplete type="number" name="department" class="validate"  min="1">
+            <label for="department">Номер отделения</label>
+            <span class="helper-text" data-error="Введите номер отделения"></span>
+        </div> --}}
+        <div class="input-field" data-shipping="postal-code">
+            <input autocomplete type="number" name="postalCode" class="validate js-required" min="5" >
+            <label for="postal-code">Почтовый индекс</label>
+            <span class="helper-text" data-error="Введите почтовый индекс"></span>
+        </div>
+        <div class="input-field" data-shipping="street">
+            <input autocomplete type="text" name="street" class="validate js-required" min="2" >
+            <label for="street">Улица</label>
+            <span class="helper-text" data-error="Введите улицу"></span>
+        </div>
+        <div class="input-field" data-shipping="apartment">
+            <input autocomplete type="number" name="apartment" class="validate js-required" min="1" >
+            <label for="apartment">Номер квартиры</label>
+            <span class="helper-text" data-error="Введите номер квартиры"></span>
+        </div>
+    </div>

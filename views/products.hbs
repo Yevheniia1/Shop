@@ -1,50 +1,15 @@
-<h1 class="main-title center">Кофе</h1>
+<h1 class="title_medium center">{{mainTitle}}</h1>
 
 {{#if productsList.length}}
-<div class="row row--products products product-cards">
+<div class="row products">
     {{#each productsList}}
     <div class="col s6 m4">
 
-     <div class="card card--products">
+        {{> product/product-card}}
 
-    {{#if productPage}}
-    <div class="card-image">
-        <img src="/{{img}}" alt="{{name}}" class="materialboxed">
-    </div>
-    <h3 class="card-title card-title--products">{{name}}</h3>
-    {{else}}
-    <a href="/products/{{id}}" target="_blank">
-        <div class="card-image">
-            <img src="/{{img}}" alt="{{name}}">
-        </div>
-        <h3 class="card-title card-title--products">{{name}}</h3>
-    </a>
-    {{/if}}
-
-    <div class="card-content card-price">
-        <p class="currency">{{price}}</p>
-    </div>
-    <div class="row card-action card-action--products">
-        {{#if @root.isAuth}}
-            {{#ifAdmin @root.userId}}
-            <a href="/products/{{id}}/edit?allow=true" >Редактировать</a>
-            {{/ifAdmin}}
-                <form action="/cart/add" method="POST" class="card-action__form">
-                <input type="hidden" name="id" value="{{id}}">
-                <input type="hidden" name="_csrf" value="{{@root.csrf}}">
-                
-                {{> buy-btn-user}}
-
-            </form>
-        {{else}}
-
-            {{> buy-btn-guest}}
-        
-        {{/if}}
-    </div>
-</div>
-
-        
+        {{#ifAdmin @root.user._id}}
+        <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
+        {{/ifAdmin}}
     </div>
     {{/each}}
 </div>

@@ -1,12 +1,83 @@
-.product-table {
-    thead {
-        @extend .grey, .lighten-3;
-    }
-    th, td, td>input {
-        font-size: 1rem!important;
+.cart {
+
+    &__tcell_product {
+        display: flex;
+        align-items: center;
+        text-align: center;
 
         @media #{$small-and-down} {
-            font-size: .8rem!important;
+            flex-direction: column;
+        }
+
+    }
+
+    &__tcell_quantity {
+        width: 10%;
+        min-width: 5em;
+    }
+
+    .product__image {
+        max-width: 100px;
+
+        @media #{$small-and-down} {
+            max-width: 80px;
+        }
+    }
+
+    .product__title {
+        font-size: 1rem;
+        font-weight: 500;
+
+        @media #{$small-and-down} {
+            font-size: .8rem;
+        }
+    }
+
+    &__thead {
+        @media #{$small-and-down} {
+            display: none;
+        }
+    }
+
+    &__tcell_price {
+        font-size: 1.3em;
+        @extend .grey-text, .text-darken-3;
+
+        @media #{$small-and-down} {
+            font-size: 1.1em;
+        }
+    }
+
+    &__total_wrapper {
+        font-family: 'Oswald', sans-serif;
+        font-size: 2em;
+        @extend .grey-text, .text-darken-2;
+
+        @media #{$medium-and-down} {
+            font-size: 1.8em;
+        }
+
+        @media #{$small-and-down} {
+            font-size: 1.5em;
+        }
+    }
+
+    &__total {
+        @extend .black-text;
+        font-weight: 500;
+    }
+
+    &__button {
+        @media #{$medium-and-down} {
+            font-size: 1em;
+        }
+
+        @media #{$small-and-down} {
+            height: auto;
+            font-size: .7em;
         }
     }
 }
+
+
+

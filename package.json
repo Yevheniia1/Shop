@@ -1,12 +1,15 @@
 {
   "name": "shop",
   "version": "1.0.0",
-  "description": "NodeJS My first app",
+  "description": "Mask shop",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "scss": "node-sass --watch public/scss/index.scss -o public"
+    "scss": "node-sass --watch public/scss/index.scss -o public",
+    "build-front": "webpack --config ./webpack-front.config.js",
+    "build-back": "webpack --config ./webpack-back.config.js"
   },
   "keywords": [
     "nodejs",
@@ -15,9 +18,20 @@
   "author": "Yevheniia <y.potiichuk@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.1"
+    "css-loader": "^3.5.3",
+    "file-loader": "^6.0.0",
+    "html-webpack-plugin": "^4.3.0",
+    "image-webpack-loader": "^6.0.0",
+    "nodemon": "^2.0.1",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-middleware": "^3.7.2"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.4.1",
     "@sendgrid/client": "^6.5.1",
     "@sendgrid/mail": "^6.5.2",
     "axios": "^0.19.2",
@@ -25,6 +39,7 @@
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.2.0",
+    "cron": "^1.8.2",
     "csurf": "^1.10.0",
     "express": "^4.17.1",
     "express-handlebars": "^3.1.0",
@@ -33,8 +48,11 @@
     "helmet": "^3.21.2",
     "mongoose": "^5.8.1",
     "multer": "^1.4.2",
+    "node-cron": "^2.0.3",
+    "node-fetch": "^2.6.0",
     "node-localstorage": "^2.1.5",
     "node-sass": "^4.13.1",
+    "request": "^2.88.2",
     "uuid": "^3.3.3"
   }
 }

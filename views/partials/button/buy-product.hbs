@@ -1,0 +1,21 @@
+<div class="row">
+{{#if @root.isAuth}}
+        <form action="/cart/add" method="POST">
+        <input type="hidden" name="id" value="{{id}}">
+        <input type="hidden" name="_csrf" value="{{@root.csrf}}">
+        
+        {{!-- Кнопка для авторизированного пользователя --}}
+        <button type="submit" class="btn button button_accent">Купить</button>
+        <input type="number" min="1" value="1" name="quantity" class="card-action__form__quantity"> 
+
+    </form> 
+{{else}}
+
+    {{!-- Кнопка для неавторизированного пользователя --}}
+
+    {{!-- Колличество обязательно после кнопки --}}
+    <button type="button" data-id="{{id}}" data-csrf="{{@root.csrf}}"  class="btn button button_accent card-action__form__btn js-addToCart">Купить</button>
+    <input type="number" min="1" value="1" name="quantity" class="card-action__form__quantity"> 
+
+{{/if}}
+</div>

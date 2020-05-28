@@ -21,8 +21,8 @@ exports.registerValidators = [
         .trim(),
     body('confirm')
         .custom((value, {req}) => {
-            if(value !== req.body.password) {
-                throw new Error('Пароль должны совпадать')
+            if(value !== req.body.regpassword) {
+                throw new Error('Пароли должны совпадать')
             }
             return true
         })
@@ -48,19 +48,22 @@ exports.loginValidators = [
         .isAlphanumeric()
         .custom( async (value, {req}) => {
             try {
-                const user = await User.findOne({email: req.body.email}),
-                areSame = await bcrypt.compare(value, user.password);
+                const user = await User.findOne({email: req.body.email});
+
+                if(user) {
+                    areSame = await bcrypt.compare(value, user.password);
           
-                if(areSame) {
-                    req.session.user = user
-                    req.session.isAuthenticated = true
-                    req.session.save((err) => {
-                        if(err) {
-                            throw err
-                        }
-                    })
-                } else {
-                    return Promise.reject('Неправильный логин или пароль')
+                    if(areSame) {
+                        req.session.user = user
+                        req.session.isAuthenticated = true
+                        req.session.save((err) => {
+                            if(err) {
+                                throw err
+                            }
+                        })
+                    } else {
+                        return Promise.reject('Неправильный логин или пароль')
+                    }
                 }
             } catch(err) {
                 console.log(err)
@@ -88,6 +91,5 @@ exports.orderValidatiion = [
     body('name', 'Имя должно состоять минимум из 2 символов')
         .isLength({min: 2, max: 56})
         .trim(),
-    body('phone', 'Введите номер телефона в формате +38099 999-99-99')
-    .matches(/\+380\d{2}\d{3}-\d{2}-\d{2}/),
+   
 ]

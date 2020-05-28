@@ -9,6 +9,7 @@ const router = Router();
 router.get('/', auth, (req, res) => {
     res.render('add', {
         title: 'Добавить товар',
+        user: req.user ? req.user.toObject() : null,
         isAdd: true
     })
 })
@@ -16,6 +17,8 @@ router.get('/', auth, (req, res) => {
 router.post('/', auth, productValidation, async (req, res) => {
     try {
         const errors = validationResult(req);
+        let imgs = req.files.map( image => image.filename);
+
         if(!errors.isEmpty()) {
             return res.status(422).render('add', {
                 title: 'Добавить товар',
@@ -24,16 +27,20 @@ router.post('/', auth, productValidation, async (req, res) => {
                 data: {
                     name: req.body.title,
                     price: req.body.price,
-                    img: req.body.img
+                    img: imgs,
+                    description: req.body.description
                 }
             })
         }
 
+
         const product = new Product({
             name: req.body.title,
             price: req.body.price,
-            img: req.file.path,
-            userId: req.user._id
+            img: imgs,
+            userId: req.user._id,
+            category: req.body.category,
+            description: req.body.description
         })
         await product.save();
         res.redirect('/products')
