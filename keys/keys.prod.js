@@ -4,5 +4,6 @@ module.exports = {
     SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
     EMAIL_FROM: process.env.EMAIL_FROM,
     BASE_URI: process.env.BASE_URI,
-    ADMIN_ID: process.env.ADMIN_ID
+    ADMIN_ID: process.env.ADMIN_ID,
+    NOVA_POSHTA: process.env.NOVA_POSHTA
 }
