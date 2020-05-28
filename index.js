@@ -24,7 +24,6 @@ const homeRouter = require('./routes/home'),
       checkoutRouter = require('./routes/checkout'),
       authRouter = require('./routes/auth'),
       profileRouter = require('./routes/profile');
-    //   novaPoshtaRouter = require('./nova-poshta');
 
 //Middleware
 const varMiddleware = require('./middleware/variables'),
@@ -90,13 +89,10 @@ app.use('/orders', ordersRouter)
 app.use('/auth', authRouter)
 app.use('/profile', profileRouter)
 app.use('/checkout', checkoutRouter)
-// app.use('/novaPoshta', novaPoshtaRouter)
 
 app.use(errorHandler)
 
 //SENDGRID
-// using Twilio SendGrid's v3 Node.js Library
-// https://github.com/sendgrid/sendgrid-nodejs
 sgMail.setApiKey(keys.SENDGRID_API_KEY);
 
 //Подключение БД

@@ -25,10 +25,7 @@
     "nodemon": "^2.0.1",
     "sass": "^1.26.5",
     "sass-loader": "^8.0.2",
-    "style-loader": "^1.2.1",
-    "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "webpack-dev-middleware": "^3.7.2"
+    "style-loader": "^1.2.1"
   },
   "dependencies": {
     "@glidejs/glide": "^3.4.1",
@@ -53,6 +50,9 @@
     "node-localstorage": "^2.1.5",
     "node-sass": "^4.13.1",
     "request": "^2.88.2",
-    "uuid": "^3.3.3"
+    "uuid": "^3.3.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-middleware": "^3.7.2"
   }
 }
