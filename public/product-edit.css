@@ -1,0 +1,5 @@
+.product-edit__images .images-wrapper {
+  display: flex; }
+
+.product-edit__images .image {
+  display: block; }

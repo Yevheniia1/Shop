@@ -14,6 +14,7 @@ function isAdmin(id) {
 router.get('/', async (req, res) => {
     try {
         const productsList = await Products.find();
+        const user = req.user ? req.user.toObject() : null;
         res.render('products', {
             title: 'Товары',
             mainTitle: `Маски`,
@@ -21,6 +22,7 @@ router.get('/', async (req, res) => {
             user: req.user ? req.user.toObject() : null,
             productsList,
         })
+        
     } catch(err) {
         console.log(err)
     }
@@ -79,16 +81,18 @@ router.post('/edit', auth, productValidation,  async (req, res) => {
 
         if(isAdmin(req.user._id)) {
             const product = await Products.findById(id);
-            const fileData = req.file;
+            const newImgs = req.files.map( image => image.filename);
+            const imgs = newImgs.concat(req.body.image)
+            
 
-            if(!fileData) {
+            if(!newImgs) {
                 res.redirect('/products')
                 return console.log('Ошибка загрузки изображения')
             }
             const toChange = {
                 name: req.body.title,
                 price: req.body.price,
-                img: fileData.path
+                img: imgs
             }
 
             Object.assign(product, toChange)
