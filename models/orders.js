@@ -18,17 +18,18 @@ const ordersSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'User'
         }, 
-    },
-    guest: {
-        name: String,
+        surname: String,
         email: String,
         phone: Number,
-        token: String
+        payment: String,
+        address: String,
+        token: String,
     },
     date: {
         type: Date,
-        default: Date.now
-    }
+        default: new Date()
+    },
+    
 })
 
 module.exports = model('Orders', ordersSchema)

@@ -24,9 +24,9 @@ function toDesiredFormat() {
         value.textContent = toCurrency(price)
     })
     
-    document.querySelectorAll('.orders__date').forEach( node => {
-        node.textContent = toDate(node.textContent)
-    })
+    // document.querySelectorAll('.orders__date').forEach( node => {
+    //     node.textContent = toDate(node.textContent)
+    // })
 }
 
 export {toCurrency, toDate, toDesiredFormat}

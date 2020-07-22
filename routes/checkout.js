@@ -58,6 +58,22 @@ async function getDepartments(city) {
     return filterСities.map( item => item.warehouses)
 }
 
+async function getAddress(shippingData) {
+    const {shipping, city} = shippingData;
+
+    switch(shipping) {
+        case 'npDepartment': {
+            const {department} = shippingData;
+            return city+' '+department
+        }
+        break
+        case 'npAddress': {
+            const {locality, street, apartment} = shippingData
+            return city+' '+locality+' '+street+' '+apartment
+        }
+    }
+}
+
 
       
 router.get('/', async (req, res) => {
@@ -90,7 +106,7 @@ router.get('/:token', async (req, res) => {
             price: computePrice(products)
 
         })
-    }catch(err) {
+    } catch(err) {
         console.log(err)
     }
 })
@@ -100,19 +116,10 @@ router.post('/guest:token', orderValidatiion, async (req, res) => {
         const token = req.params.token,
               shippingData = req.body,
               guestProfile = JSON.parse(localStorage.getItem(token)),
-              {name, phone, email, payment, shipping} = shippingData,
-              department = req.body.department,
+              {name, phone, email, payment, city, surname} = shippingData,
               checkUser = await User.find({ email });
 
-        switch(shipping) {
-            case 'npDepartment': {
-                const {department} = shippingData;
-            }
-
-            case 'npAddress': {
-                const {locality, street, apartment} = shippingData
-            }
-        }
+        const address = await getAddress(req.body);
 
 
         // if(checkUser) {
@@ -144,10 +151,10 @@ router.post('/guest:token', orderValidatiion, async (req, res) => {
 
 
      const order = new Orders({
-        guest: {
-            name, email, phone, token
+        user: {
+            name, email, phone, token, payment, address, surname
         },
-        products
+        products,
     })
 
     await order.save()
@@ -272,6 +279,7 @@ router.post('/shipping', async (req, res) => {
 
 router.post('/user', auth, async (req, res) => {
     try{
+        const {name, surname, phone, email, payment} = req.body;
         const user = await req.user 
             .populate('cart.items.productId')
             .execPopulate();
@@ -282,31 +290,34 @@ router.post('/user', auth, async (req, res) => {
             quantity: p.quantity,
         }))
 
+        const address = await getAddress(req.body);
+
+        // const address = new Address({
+        //     userId: user._id,
+        //     city: req.body.city,
+        //     department: req.body.department,
+        //     locality: req.body.locality,
+        //     street: req.body.street,
+        //     apartment: req.body.apartment
+        // })
+
         const order = new Orders({
             user: {
-                name: req.user.name,
+                name, surname, phone, email, payment, address,
                 userId: req.user
             },
-            products: products
-        })
-
-        const address = new Address({
-            userId: user._id,
-            city: req.body.city,
-            department: req.body.department,
-            locality: req.body.locality,
-            street: req.body.street,
-            apartment: req.body.apartment
+            products
         })
 
         await order.save()
-        await address.save()
+        // await address.save()
         await req.user.clearCart()
         const orderId = order._id.toString().slice(0, 7);
 
         res.render('order-confirmed', {
             title: "Заказ принят",
-            id: orderId
+            id: orderId,
+            user: req.user ? req.user.toObject() : null,
         })
 
         await sgMail.send(emailText( {

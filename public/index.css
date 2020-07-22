@@ -6825,7 +6825,6 @@ body {
   justify-content: space-between;
   align-items: baseline; }
   .user-account__wrapper .user-account__background {
-    width: 100%;
     object-fit: cover; }
   .user-account__wrapper .user-account__trigger {
     display: flex !important;
@@ -6982,6 +6981,13 @@ body {
   .cart__button {
     height: auto;
     font-size: .7em; } }
+
+.orders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; }
+  .orders .order {
+    flex-basis: 100%; }
 
 .link-cart {
   display: block;

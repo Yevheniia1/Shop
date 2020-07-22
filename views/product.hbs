@@ -11,6 +11,10 @@
 
         {{> button/buy-product}}
 
+        {{#ifAdmin @root.user._id}}
+          <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
+        {{/ifAdmin}}
+
     </div>
     <div class="description col s12 m6">
         <h4>Описание</h4>

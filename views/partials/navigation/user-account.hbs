@@ -12,7 +12,11 @@
                 </div>
             </li>
             <li><a href="/cart"><i class="material-icons">shopping_basket</i>Корзина</a></li>
+            {{#ifAdmin @root.user._id}}
+            <li><a href="/orders/all/read?allow=true"><i class="material-icons">done</i>Заказы</a></li>
+            {{else}}
             <li><a href="/orders"><i class="material-icons">done</i>Мои заказы</a></li>
+            {{/ifAdmin}}
             <li><div class="divider"></div></li>
             <li><a class="subheader">Настройки</a></li>
             <li><a class="waves-effect" href="/profile">Редактировать данные</a></li>

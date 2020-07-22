@@ -9,11 +9,16 @@ module.exports = {
     },
 
     ifAdmin(a, options) {
-        if(a !== null && keys.ADMIN_ID.includes(a.toString())) {
-            return options.fn(this);
+        try {
+            if(a !== null && keys.ADMIN_ID.includes(a.toString())) {
+                return options.fn(this);
+            }
+    
+            return options.inverse(this)
+        } catch(err) {
+            console.log(err)
         }
-
-        return options.inverse(this)
+        
     },
 
     cover(imgs, name, option) {
