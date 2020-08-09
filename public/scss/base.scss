@@ -1,20 +1,24 @@
 html {
-    font-size: 93.75%;
+    font-size: 10px;
 }
 
 body {
     font-size: 100%;
+
+    @media #{$medium-and-down} {
+        font-size: 100%;
+    }
 }
 
 //Typography
 
 .currency {
-    @extend .black-text;
+    color: #000000;
 }
 
 .title_large {
     font-family: $font-primary;
-    font-size: 4rem;
+    font-size: 5em;
     font-weight: 500;
     line-height: 110%;
     margin: 3rem 0 1.8rem 0;

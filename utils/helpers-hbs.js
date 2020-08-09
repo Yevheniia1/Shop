@@ -22,7 +22,7 @@ module.exports = {
     },
 
     cover(imgs, name, option) {
-        return `<img src="/images/${imgs[0]}" alt="${name}" class="materialboxed product__image"></img>`
+        return `<img src="/images/${imgs[0]}" alt="${name}" class="product__image"></img>`
         
     },
 }

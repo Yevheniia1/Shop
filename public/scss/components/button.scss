@@ -36,7 +36,7 @@
 
     &_close_small {
         @extend .button_close;
-        @include size(1rem, 1rem);
+        @include size(1.5em, 1.5em);
     }
 
 }

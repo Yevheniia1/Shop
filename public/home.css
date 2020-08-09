@@ -1,0 +1,37 @@
+.home__header-banner {
+  margin-top: -2em;
+  position: relative; }
+  .home__header-banner .header-banner__wrapper {
+    display: flex;
+    background-color: #eaeae2; }
+  .home__header-banner .header-banner__img {
+    display: block;
+    width: 50%;
+    object-fit: cover; }
+  .home__header-banner .header-banner__description {
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%); }
+
+.home__offer {
+  display: flex; }
+  .home__offer .offer__carousel {
+    flex-basis: 50%; }
+    .home__offer .offer__carousel .carousel__title {
+      margin-bottom: 1em;
+      text-align: center; }
+  .home__offer .offer__banner {
+    flex-basis: 50%;
+    position: relative; }
+    .home__offer .offer__banner .banner__img {
+      display: block;
+      width: 100%;
+      object-fit: cover; }
+    .home__offer .offer__banner .banner__description {
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      transform: translate(-50%, -50%); }
+      .home__offer .offer__banner .banner__description .description, .home__offer .offer__banner .banner__description .description span {
+        color: #ffffff; }

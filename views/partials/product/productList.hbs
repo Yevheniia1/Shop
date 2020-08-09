@@ -1,0 +1,16 @@
+{{#if productsList.length}}
+<div class="products">
+    {{#each productsList}}
+    <div class="product-card__wrapper">
+
+        {{> product/product-card}}
+
+        {{#ifAdmin @root.user._id}}
+        <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
+        {{/ifAdmin}}
+    </div>
+    {{/each}}
+</div>
+{{else}}
+    <strong>Товаров пока нет</strong>
+{{/if}}

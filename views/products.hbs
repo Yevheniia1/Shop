@@ -1,21 +1,7 @@
-<h1 class="title_medium center">{{mainTitle}}</h1>
+<h1 class="title_medium center">Маски</h1>
 
-{{#if productsList.length}}
-<div class="row products">
-    {{#each productsList}}
-    <div class="col s6 m4">
+  {{> product/productList}}
 
-        {{> product/product-card}}
-
-        {{#ifAdmin @root.user._id}}
-        <a href="/products/{{id}}/edit?allow=true">Редактировать</a>
-        {{/ifAdmin}}
-    </div>
-    {{/each}}
-</div>
-{{else}}
-    <strong>Товаров пока нет</strong>
-{{/if}}
 
 
 

@@ -1,10 +1,11 @@
 .product {
     &__title {
-        @extend .black-text;
         font-family: $font-primary;
-        font-size: 1.5rem;
-        margin: 1.5rem 0 1rem;
-        font-weight: 400;
+        font-size: 1.5em;
+        margin: .5em 0;
+        font-weight: 700;
+        text-transform: uppercase;
+        @extend .grey-text, .text-darken-2;
 
         @media #{$medium-and-down} {
             font-size: 1.2rem;
@@ -17,10 +18,9 @@
 
     &__price {
         font-family: $font-accent;
-        font-size: 1.2rem;
+        font-size: 2em;
         text-align: center;
-        padding: .5rem 1rem;
-        margin-bottom: .8rem;
+        margin: .5em 0;
         text-transform: uppercase;
 
         @media #{$medium-and-down} {
@@ -35,9 +35,9 @@
     }
     
     &__image {
-        object-fit: contain;
+        object-fit: cover;
         display: block;
-        width: 100%;
+        @include size(100%, 100%);
         min-width: 80px;
     }
 }

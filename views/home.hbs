@@ -1,10 +1,75 @@
 <h1 class="visually-hidden">Магазин масок 404.ua</h1>
- <div class="carousel">
-    <a class="carousel-item" href="#one!"><img src="../images/home/header-slides/1.jpg"></a>
-    <a class="carousel-item" href="#two!"><img src="../images/home/header-slides/2.jpg"></a>
-    <a class="carousel-item" href="#three!"><img src="../images/home/header-slides/3.jpg"></a>
-    <a class="carousel-item" href="#four!"><img src="../images/home/header-slides/4.jpg"></a>
-    <a class="carousel-item" href="#five!"><img src="../images/home/header-slides/5.jpg"></a>
-    <a class="carousel-item" href="#five!"><img src="../images/home/header-slides/6.jpg"></a>
+<section class="home__header-banner">
+  <h2 class="visually-hidden">Маски многоразовые</h2>
+  <div class="header-banner__wrapper">
+    <img src="../images/home-bg.png" alt="Маски 404.ua" class="header-banner__img" style="transform: scale(-1,1) ">
+    <img src="../images/home-bg.png" alt="Маски 404.ua" class="header-banner__img">
+    <div class="header-banner__description">
+      <h3>Lorem ipsum dolor<br> sit amet.</h3>
+      <a class="button">Купить</a>
+    </div>
   </div>
+</section>
+<section class="home__categories">
+    <div class="categories__list">
+      <div class="category large-card">
+        <a href="">
+          <h3 class="category__title">Anime</h3>
+          <img src="../images/8.png" alt="" class="category__img">
+        </a>
+      </div>
+      <div class="category medium-card">
+        <a href="">
+          <h3 class="category__title">Games</h3>
+          <img src="../images/2.jpg" alt="" class="category__img">
+        </a>
+      </div>
+      <div class="categories-wrapper">
+        <div class="category small-card">
+          <a href="">
+            <h3 class="category__title black-text">Serials</h3>
+            <img src="../images/home-bg.png" alt="" class="category__img">
+          </a>
+        </div>
+        <div class="category small-card">
+          <a href="">
+            <h3 class="category__title black-text">Films</h3>
+            <img src="../images/home-bg.png" alt="" class="category__img">
+          </a>
+        </div>
+      </div>
+    </div>
+</section>
+<section>
+  <h2 class="visually-hidden">Маски многоразовые</h2>
+  <div class="home__offer">
+     <div class="offer__banner">
+      <img src="../images/8.jpg" alt="Маски" class="banner__img">
+      <div class="banner__description-wrapper">
+        <p class="banner__description">Всего <span class="currency">175</span></p>
+        <a class="button">Купить</a>
+      </div>
+    </div>
+    <div class="offer__carousel">
+      <div class="carousel">
+        <h3 class="carousel__title">Lorem, ipsum dolor.</h3>
+        <a class="carousel-item" href="#one!"><img src="../images/home/header-slides/1.jpg"></a>
+        <a class="carousel-item" href="#two!"><img src="../images/home/header-slides/2.jpg"></a>
+        <a class="carousel-item" href="#three!"><img src="../images/home/header-slides/3.jpg"></a>
+        <a class="carousel-item" href="#four!"><img src="../images/home/header-slides/4.jpg"></a>
+        <a class="carousel-item" href="#five!"><img src="../images/home/header-slides/5.jpg"></a>
+        <a class="carousel-item" href="#five!"><img src="../images/home/header-slides/6.jpg"></a>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="home__catalog"> 
+  <h2 class="visually-hidden catalog__title">Маски</h2>
+  <div class="container">
+    
+    {{> product/productList}}
+
+  </div>
+  {{!-- <a href="/products" class="button catalog__button">Смотреть все</a> --}}
+</section>
 
