@@ -31,7 +31,7 @@
     "@glidejs/glide": "^3.4.1",
     "@sendgrid/client": "^6.5.1",
     "@sendgrid/mail": "^6.5.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",
     "compression": "^1.7.4",
     "connect-flash": "^0.1.1",
