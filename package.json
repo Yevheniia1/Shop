@@ -48,7 +48,7 @@
     "node-cron": "^2.0.3",
     "node-fetch": "^2.6.0",
     "node-localstorage": "^2.1.5",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "request": "^2.88.2",
     "uuid": "^3.3.3",
     "webpack": "^4.43.0",
